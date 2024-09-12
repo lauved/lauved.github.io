@@ -1,0 +1,163 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+header {
+    position: relative;
+    background: #f79e9e;
+    color: #ffffff;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing-content {
+    text-align: center;
+}
+
+.landing-content h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.landing-content p {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+main {
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+section {
+    padding: 60px 20px;
+}
+
+h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.project-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.project-item {
+    flex: 1;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.project-item:hover {
+    background: #e9ecef;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+.back-to-top {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: #f08392;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none;
+    cursor: pointer;
+    z-index: 1000; 
+}
+
+.back-to-top.show {
+    display: block;
+}
+
+.project-item {
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    background: #f9f9f9;
+}
+
+.project-item h3 {
+    margin: 0 0 10px;
+}
+
+.project-item p {
+    margin: 0;
+}
+
+section {
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Hover effects */
+section:hover {
+    background-color: #f0f0f0; 
+    transform: scale(1.02);    
+    box-shadow: 0 4px 8px rgba(145, 111, 111, 0.2); 
+}
+
+.about {
+    background-color: #f5d2d2; 
+}
+
+.projects {
+    background-color: #f5d2d2; 
+}
+
+.skills {
+    background-color: #f5d2d2;
+}
+
+.scroll-down {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #f79e9e;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+    z-index: 1000;
+    opacity: 0.8; 
+    transition: opacity 0.3s ease;
+    pointer-events: none; 
+}
