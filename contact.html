@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - Terrence Lappay</title>
+    <script>
+        (() => {
+            const savedTheme = localStorage.getItem("portfolio-theme");
+            const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            document.documentElement.setAttribute("data-theme", savedTheme || preferredTheme);
+        })();
+    </script>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="site-page">
+<canvas class="site-dot-grid" id="interactiveDotGrid" aria-hidden="true"></canvas>
+
+<div class="site-content">
+    <nav class="nav">
+        <div class="logo">L</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="works.html">Works</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li>
+                <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+                    <span class="theme-toggle__icon" aria-hidden="true">&#9789;</span>
+                    <span class="theme-toggle__text">Dark</span>
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="site-main">
+        <section class="page-hero">
+            <div class="page-copy">
+                <p class="section-label">Contact</p>
+                <h1>Let's connect for UI/UX, front-end, and creative project work.</h1>
+                <p>
+                    If you have a project, collaboration, or internship opportunity in mind, the best way to reach me right now is
+                    through my professional profiles below.
+                </p>
+            </div>
+
+            <div class="highlight-card">
+                <p class="section-label">Availability</p>
+                <h2>Open to thoughtful collaborations.</h2>
+                <p>
+                    I'm especially interested in projects focused on interface design, front-end implementation, and creative digital
+                    experiences.
+                </p>
+            </div>
+        </section>
+
+        <section class="contact-page-grid">
+            <a class="contact-card-panel" href="https://github.com/lauved" target="_blank" rel="noopener">
+                <p class="section-label">GitHub</p>
+                <h3>lauved</h3>
+                <p>Browse repositories, experiments, and code-based project work.</p>
+            </a>
+
+            <a class="contact-card-panel" href="https://www.linkedin.com/in/terrence-paras-lappay-6337353a8/" target="_blank" rel="noopener">
+                <p class="section-label">LinkedIn</p>
+                <h3>Terrence Lappay</h3>
+                <p>Reach out for collaboration, networking, and professional opportunities.</p>
+            </a>
+        </section>
+
+        <section class="stack-panel">
+            <p class="section-label">Best Fit</p>
+            <div class="pill-row">
+                <span class="pill">UI/UX Projects</span>
+                <span class="pill">Frontend Builds</span>
+                <span class="pill">Student Collaborations</span>
+                <span class="pill">Portfolio Websites</span>
+                <span class="pill">Creative Concepts</span>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

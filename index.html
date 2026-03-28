@@ -2,45 +2,328 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Terrence Lappay – Portfolio</title>
-    <link rel="stylesheet" href="styles.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terrence Lappay - Portfolio</title>
+    <script>
+        (() => {
+            const savedTheme = localStorage.getItem("portfolio-theme");
+            const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            document.documentElement.setAttribute("data-theme", savedTheme || preferredTheme);
+        })();
+    </script>
+    <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="site-page">
+<canvas class="site-dot-grid" id="interactiveDotGrid" aria-hidden="true"></canvas>
 
-<!-- NAV -->
-<nav class="nav">
-    <div class="logo">L</div>
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="credentials.html">About</a></li>
-        <li><a href="works.html">Works</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-</nav>
+<div class="site-content">
+    <nav class="nav">
+        <div class="logo">L</div>
+        <ul>
+            <li><a href="#home-top">Home</a></li>
+            <li><a href="#home-about">About</a></li>
+            <li><a href="#home-works">Works</a></li>
+            <li><a href="#home-contact">Contact</a></li>
+            <li>
+                <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+                    <span class="theme-toggle__icon" aria-hidden="true">&#9789;</span>
+                    <span class="theme-toggle__text">Dark</span>
+                </button>
+            </li>
+        </ul>
+    </nav>
 
-<!-- HERO -->
-<section class="hero">
-    <div class="hero-text">
-        <h1>creative designer<br>& developer.</h1>
-        <p>
-            Hi, I'm <strong>Terrence Lappay</strong>.  
-            A passionate UI/UX Designer & Front-End Developer  
-            crafting clean, modern digital experiences.
-        </p>
+    <main class="site-main" id="home-top">
+        <section class="hero hero--home">
+            <div class="hero-text">
+                <p class="section-label">Portfolio</p>
+                <h1>creative designer<br>& developer.</h1>
+                <p>
+                    Hi, I'm <strong>Terrence Lappay</strong>. I build clean, modern experiences across web, mobile, games, and AI-focused
+                    concepts with a strong eye for interface clarity and front-end execution.
+                </p>
 
-        <a href="works.html" class="cta">SEE MY WORKS →</a>
+                <div class="hero-actions">
+                    <a href="#home-about" class="cta">View Resume</a>
+                </div>
 
-        <div class="socials">
-    <a href="https://github.com/lauved" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://www.linkedin.com/in/terrence-paras-lappay-6337353a8/" target="_blank" rel="noopener">LinkedIn</a>
-    
+                <div class="socials">
+                    <a href="https://github.com/lauved" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://www.linkedin.com/in/terrence-paras-lappay-6337353a8/" target="_blank" rel="noopener">LinkedIn</a>
+                </div>
+            </div>
+
+            <aside class="hero-panel">
+                <p class="section-label">Current Focus</p>
+                <h2>Designing intentional interfaces and turning them into polished front-end builds.</h2>
+                <p>
+                    I enjoy shaping student and portfolio projects that feel modern, readable, and grounded in practical UI/UX thinking.
+                </p>
+                <div class="pill-row">
+                    <span class="pill">UI/UX Design</span>
+                    <span class="pill">Front-End Development</span>
+                    <span class="pill">Mobile Concepts</span>
+                    <span class="pill">Game Visuals</span>
+                </div>
+            </aside>
+        </section>
+
+        <section class="home-section about-showcase" id="home-about">
+            <article class="profile-card">
+                <div class="profile-card__media">
+                    <img src="profile.png" alt="Portrait of Terrence Lappay" />
+                </div>
+
+                <div class="profile-card__body">
+                    <h2>Terrence Lappay</h2>
+                    <p class="profile-card__role">UI/UX Designer - Front-End Developer</p>
+
+                    <div class="profile-card__meta">
+                        <div>
+                            <p class="section-label">Based In</p>
+                            <p>Pangasinan, Philippines</p>
+                        </div>
+                        <div>
+                            <p class="section-label">Primary Focus</p>
+                            <p>Execution-driven interface design and front-end implementation</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="about-overview">
+                <p class="about-overview__lead">
+                    As a UI/UX Designer and Front-End Developer, I focus on turning ideas into clear, usable, and polished digital
+                    experiences. I enjoy moving from planning and visual direction into implementation so the final output feels both
+                    intentional and functional.
+                </p>
+
+                <ul class="about-points">
+                    <li>Translate concepts into structured, modern interface decisions.</li>
+                    <li>Build responsive front-end experiences across web and mobile-focused projects.</li>
+                    <li>Bring creativity from design, game visuals, and interaction thinking into each build.</li>
+                </ul>
+
+                <div class="skills-panel">
+                    <p class="section-label">Skills</p>
+                    <div class="pill-row">
+                        <span class="pill">UI/UX Design</span>
+                        <span class="pill">Frontend Development</span>
+                        <span class="pill">Responsive Layouts</span>
+                        <span class="pill">HTML / CSS / JavaScript</span>
+                        <span class="pill">Mobile UI Concepts</span>
+                        <span class="pill">Game Art</span>
+                        <span class="pill">Wireframing</span>
+                        <span class="pill">Visual Design</span>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="home-section home-projects" id="home-works">
+            <div class="section-heading">
+                <p class="section-label">Works</p>
+                <h2>Projects built across web, mobile, AI, and games.</h2>
+                <p>Explore one highlighted project per category here, then open the full works page to see the complete collection.</p>
+            </div>
+
+            <div class="home-project-filters" role="toolbar" aria-label="Homepage project filters">
+                <button class="home-filter-chip is-active" type="button" data-home-filter="all" aria-pressed="true">All</button>
+                <button class="home-filter-chip" type="button" data-home-filter="web" aria-pressed="false">Web</button>
+                <button class="home-filter-chip" type="button" data-home-filter="games" aria-pressed="false">Games</button>
+                <button class="home-filter-chip" type="button" data-home-filter="mobile" aria-pressed="false">Mobile</button>
+                <button class="home-filter-chip" type="button" data-home-filter="ai" aria-pressed="false">AI</button>
+            </div>
+
+            <div class="home-project-stage">
+                <article class="home-project-card home-project-card--ai" data-home-preview="all">
+                    <div class="home-project-card__media">
+                        <span class="home-project-card__category">Featured</span>
+                        <div class="home-project-card__art">
+                            <picture>
+                                <source srcset="haha.avif" type="image/avif" />
+                                <img src="haha.png" alt="DermaScan featured preview" loading="lazy" />
+                            </picture>
+                        </div>
+                        <p class="home-project-card__semester">3rd Year - 1st Semester</p>
+                    </div>
+                    <div class="home-project-card__content">
+                        <p class="home-project-card__eyebrow">3RD YEAR - 1ST SEMESTER</p>
+                        <h3>DermaScan</h3>
+                        <p class="home-project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
+                        <p class="home-project-card__description">
+                            An AI-assisted skin analysis concept focused on making early skin condition detection more accessible through
+                            image-based interaction.
+                        </p>
+                        <div class="home-project-card__tags">
+                            <span>AI</span>
+                            <span>Mobile</span>
+                            <span>Healthcare</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="home-project-card home-project-card--web" data-home-preview="web" hidden>
+                    <div class="home-project-card__media">
+                        <span class="home-project-card__category">Web</span>
+                        <div class="home-project-card__art">
+                            <img src="sneakhub.png" alt="SneakHub preview" loading="lazy" />
+                        </div>
+                        <p class="home-project-card__semester">1st Year - 2nd Semester</p>
+                    </div>
+                    <div class="home-project-card__content">
+                        <p class="home-project-card__eyebrow">1ST YEAR - 2ND SEMESTER</p>
+                        <h3>SneakHub</h3>
+                        <p class="home-project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
+                        <p class="home-project-card__description">
+                            An online shoe catalog interface built to make browsing men's, women's, and children's footwear clean and
+                            easy to navigate.
+                        </p>
+                        <div class="home-project-card__tags">
+                            <span>Web</span>
+                            <span>Catalog</span>
+                            <span>UI/UX</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="home-project-card home-project-card--games" data-home-preview="games" hidden>
+                    <div class="home-project-card__media">
+                        <span class="home-project-card__category">Games</span>
+                        <div class="home-project-card__art home-project-card__art--placeholder">
+                            <div class="home-project-card__placeholder">
+                                <p>Echoes</p>
+                                <span>Open-World 3D Puzzle</span>
+                            </div>
+                        </div>
+                        <p class="home-project-card__semester">3rd Year - 2nd Semester</p>
+                    </div>
+                    <div class="home-project-card__content">
+                        <p class="home-project-card__eyebrow">3RD YEAR - 2ND SEMESTER</p>
+                        <h3>Echoes of the Lighthouse</h3>
+                        <p class="home-project-card__role"><strong>Role:</strong> GAME ARTIST</p>
+                        <p class="home-project-card__description">
+                            A 3D exploration and puzzle game combining immersive storytelling, sound-guided play, and stylized visual
+                            world-building.
+                        </p>
+                        <div class="home-project-card__tags">
+                            <span>Games</span>
+                            <span>3D</span>
+                            <span>Puzzle</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="home-project-card home-project-card--mobile" data-home-preview="mobile" hidden>
+                    <div class="home-project-card__media">
+                        <span class="home-project-card__category">Mobile</span>
+                        <div class="home-project-card__art">
+                            <img src="baskit.png" alt="Baskit preview" loading="lazy" />
+                        </div>
+                        <p class="home-project-card__semester">2nd Year - 2nd Semester</p>
+                    </div>
+                    <div class="home-project-card__content">
+                        <p class="home-project-card__eyebrow">2ND YEAR - 2ND SEMESTER</p>
+                        <h3>Baskit</h3>
+                        <p class="home-project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
+                        <p class="home-project-card__description">
+                            A grocery-list and pickup experience designed to save time for busy users while keeping local market shopping
+                            organized and convenient.
+                        </p>
+                        <div class="home-project-card__tags">
+                            <span>Mobile</span>
+                            <span>Marketplace</span>
+                            <span>UI Flow</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="home-project-card home-project-card--ai" data-home-preview="ai" hidden>
+                    <div class="home-project-card__media">
+                        <span class="home-project-card__category">AI</span>
+                        <div class="home-project-card__art">
+                            <picture>
+                                <source srcset="haha.avif" type="image/avif" />
+                                <img src="haha.png" alt="DermaScan AI preview" loading="lazy" />
+                            </picture>
+                        </div>
+                        <p class="home-project-card__semester">3rd Year - 1st Semester</p>
+                    </div>
+                    <div class="home-project-card__content">
+                        <p class="home-project-card__eyebrow">3RD YEAR - 1ST SEMESTER</p>
+                        <h3>DermaScan</h3>
+                        <p class="home-project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
+                        <p class="home-project-card__description">
+                            A skin-condition analysis concept that uses AI-assisted image interpretation to help users notice potential
+                            concerns earlier.
+                        </p>
+                        <div class="home-project-card__tags">
+                            <span>AI</span>
+                            <span>Mobile</span>
+                            <span>Healthcare</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="section-actions">
+                <a href="works.html" class="cta">See All My Works</a>
+            </div>
+        </section>
+
+        <section class="home-section home-contact" id="home-contact">
+            <div class="section-heading">
+                <p class="section-label">Contact</p>
+                <h2>Let's build something meaningful.</h2>
+                <p>
+                    Whether it's a collaboration, internship role, or software project, I'm open to discussing ideas with clear impact.
+                </p>
+            </div>
+
+            <div class="home-contact-grid">
+                <article class="contact-details-card">
+                    <h3>Contact Details</h3>
+                    <p>Prefer direct communication? Reach out through email and I will respond as quickly as possible.</p>
+
+                    <div class="contact-details-list">
+                        <div>
+                            <p class="section-label">Email</p>
+                            <a href="mailto:tepa.lappay.up@phinmaed.com">tepa.lappay.up@phinmaed.com</a>
+                        </div>
+                        <div>
+                            <p class="section-label">Location</p>
+                            <p>Pangasinan, Philippines</p>
+                        </div>
+                        <div>
+                            <p class="section-label">Availability</p>
+                            <p>Open for internships, freelance work, and team collaborations.</p>
+                        </div>
+                    </div>
+                </article>
+
+                <form class="contact-form-card contact-form" data-contact-email="tepa.lappay.up@phinmaed.com">
+                    <label class="form-field">
+                        <span>Name</span>
+                        <input type="text" name="name" placeholder="Your name" required />
+                    </label>
+
+                    <label class="form-field">
+                        <span>Email</span>
+                        <input type="email" name="email" placeholder="you@example.com" required />
+                    </label>
+
+                    <label class="form-field">
+                        <span>Message</span>
+                        <textarea name="message" rows="6" placeholder="Tell me about your project or role..." required></textarea>
+                    </label>
+
+                    <button class="contact-submit" type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
 </div>
 
-    </div>
-
-
-</section>
-
+<script src="script.js"></script>
 </body>
 </html>

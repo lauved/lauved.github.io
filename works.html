@@ -3,58 +3,223 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Works – Terrence Lappay</title>
-
-    <!-- Global styles (NAV, fonts, layout) -->
-    <link rel="stylesheet" href="styles.css">
-
-    <!-- Works page styles ONLY -->
-    <link rel="stylesheet" href="works.css">
+    <title>Works - Terrence Lappay</title>
+    <script>
+        (() => {
+            const savedTheme = localStorage.getItem("portfolio-theme");
+            const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            document.documentElement.setAttribute("data-theme", savedTheme || preferredTheme);
+        })();
+    </script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="works.css" />
 </head>
-<body>
+<body class="site-page">
+<canvas class="site-dot-grid" id="interactiveDotGrid" aria-hidden="true"></canvas>
 
-<!-- NAV (IDENTICAL TO HOME) -->
-<nav class="nav">
-    <div class="logo">L</div>
-    <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="credentials.html">About</a></li>
-        <li><a href="works.html">Works</a></li>
-        <li><a href="#contact">Contact</a></li>
-    </ul>
-</nav>
+<div class="site-content">
+    <nav class="nav">
+        <div class="logo">L</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="works.html">Works</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li>
+                <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
+                    <span class="theme-toggle__icon" aria-hidden="true">&#9789;</span>
+                    <span class="theme-toggle__text">Dark</span>
+                </button>
+            </li>
+        </ul>
+    </nav>
 
-<!-- WORKS CONTENT -->
-<section class="works-page">
-    <h1>Selected Works</h1>
+    <main class="site-main">
+        <section class="works-page">
+            <div class="works-intro">
+                <p class="section-label">Projects</p>
+                <h1>Selected Works</h1>
+                <p>
+                    Browse the projects I have built across web, mobile, games, and AI. Use the filters to focus on a category, or keep
+                    <strong>All</strong> selected to view everything together.
+                </p>
+            </div>
 
-    <div class="works-grid">
-        <a href="#" class="work-card">
-            <h3>Project One</h3>
-            <p>UI / UX Design</p>
-        </a>
+            <div class="project-filters" role="toolbar" aria-label="Project filters">
+                <button class="filter-chip is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+                <button class="filter-chip" type="button" data-filter="mobile" aria-pressed="false">Mobile</button>
+                <button class="filter-chip" type="button" data-filter="web" aria-pressed="false">Web</button>
+                <button class="filter-chip" type="button" data-filter="games" aria-pressed="false">Games</button>
+                <button class="filter-chip" type="button" data-filter="ai" aria-pressed="false">AI</button>
+            </div>
 
-        <a href="#" class="work-card">
-            <h3>Project Two</h3>
-            <p>Web Development</p>
-        </a>
+            <div class="projects-stack">
+                <article class="project-card project-card--web" data-categories="web">
+                    <div class="project-card__media">
+                        <span class="project-card__category">Web</span>
+                        <div class="project-card__art">
+                            <img src="sneakhub.png" alt="SneakHub project preview" />
+                        </div>
+                        <p class="project-card__semester">1st Year - 2nd Semester</p>
+                    </div>
+                    <div class="project-card__content">
+                        <p class="project-card__eyebrow">1ST YEAR - 2ND SEMESTER</p>
+                        <h2>SneakHub</h2>
+                        <p class="project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
+                        <p class="project-card__description">
+                            SneakHub is an online shoe catalog where you can explore a wide variety of footwear options for men, women,
+                            and children. Dive into our extensive collection featuring sneakers, sporty shoes, walking shoes, and fashion
+                            shoes, carefully curated to cater to diverse tastes and preferences. While SneakHub does not offer
+                            e-commerce functionality, it provides a convenient platform for discovering the perfect pair of shoes for
+                            every member of the family with just a few clicks.
+                        </p>
+                        <div class="project-card__tags">
+                            <span>Web</span>
+                            <span>Catalog</span>
+                            <span>UI/UX</span>
+                        </div>
+                    </div>
+                </article>
 
-        <a href="#" class="work-card">
-            <h3>Project Three</h3>
-            <p>Landing Page</p>
-        </a>
+                <article class="project-card project-card--web" data-categories="web">
+                    <div class="project-card__media">
+                        <span class="project-card__category">Web</span>
+                        <div class="project-card__art project-card__art--placeholder">
+                            <div class="project-card__placeholder">
+                                <p>BMI</p>
+                                <span>Calculator App</span>
+                            </div>
+                        </div>
+                        <p class="project-card__semester">1st Year - 2nd Semester</p>
+                    </div>
+                    <div class="project-card__content">
+                        <p class="project-card__eyebrow">1ST YEAR - 2ND SEMESTER</p>
+                        <h2>BMI Calculator</h2>
+                        <p class="project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
+                        <p class="project-card__description">
+                            A GUI-based application that calculates Body Mass Index (BMI) and stores user records in a text file acting
+                            as a simple database.
+                        </p>
+                        <div class="project-card__tags">
+                            <span>Web</span>
+                            <span>Utility</span>
+                            <span>GUI</span>
+                        </div>
+                    </div>
+                </article>
 
-        <a href="#" class="work-card">
-            <h3>Project Four</h3>
-            <p>Brand Identity</p>
-        </a>
+                <article class="project-card project-card--games" data-categories="mobile games">
+                    <div class="project-card__media">
+                        <span class="project-card__category">Mobile / Games</span>
+                        <div class="project-card__art">
+                            <img src="petpal.png" alt="PetPal project preview" loading="lazy" />
+                        </div>
+                        <p class="project-card__semester">2nd Year - 1st Sem</p>
+                    </div>
+                    <div class="project-card__content">
+                        <p class="project-card__eyebrow">2ND YEAR - 1ST SEM</p>
+                        <h2>PetPal</h2>
+                        <p class="project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
+                        <p class="project-card__description">
+                            Pet Pal is an interactive 2D 8 bit mobile game where players adopt and care for a virtual pet. Players will
+                            be responsible for nurturing their pet by feeding, grooming, playing, and ensuring its overall well-being.
+                            The game was designed to offer a blend of fun, responsibility, and creativity, appealing to a broad
+                            audience, especially children and casual gamers.
+                        </p>
+                        <div class="project-card__tags">
+                            <span>Mobile</span>
+                            <span>Games</span>
+                            <span>8-Bit</span>
+                        </div>
+                    </div>
+                </article>
 
-        <a href="#" class="work-card">
-            <h3>Project Five</h3>
-            <p>Creative Concept</p>
-        </a>
-    </div>
-</section>
+                <article class="project-card project-card--mobile" data-categories="mobile web">
+                    <div class="project-card__media">
+                        <span class="project-card__category">Mobile / Web</span>
+                        <div class="project-card__art">
+                            <img src="baskit.png" alt="Baskit project preview" loading="lazy" />
+                        </div>
+                        <p class="project-card__semester">2nd Year - 2nd Semester</p>
+                    </div>
+                    <div class="project-card__content">
+                        <p class="project-card__eyebrow">2ND YEAR - 2ND SEMESTER</p>
+                        <h2>Baskit</h2>
+                        <p class="project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
+                        <p class="project-card__description">
+                            Baskit is a solution for busy individuals who want to reclaim their time while still enjoying the benefits of
+                            fresh, local market shopping. Users can create and manage personalized grocery lists by browsing a diverse
+                            range of market products. Once the list is finalized, they generate a unique code and a trusted tagabili
+                            handles the shopping. Users then present their code at the branch to quickly collect their prepared items,
+                            saving valuable time and effort.
+                        </p>
+                        <div class="project-card__tags">
+                            <span>Mobile</span>
+                            <span>Web</span>
+                            <span>Marketplace</span>
+                        </div>
+                    </div>
+                </article>
 
+                <article class="project-card project-card--ai" data-categories="mobile ai">
+                    <div class="project-card__media">
+                        <span class="project-card__category">Mobile / AI</span>
+                        <div class="project-card__art">
+                            <picture>
+                                <source srcset="haha.avif" type="image/avif" />
+                                <img src="haha.png" alt="DermaScan project preview" loading="lazy" />
+                            </picture>
+                        </div>
+                        <p class="project-card__semester">3rd Year - 1st Semester</p>
+                    </div>
+                    <div class="project-card__content">
+                        <p class="project-card__eyebrow">3RD YEAR - 1ST SEMESTER</p>
+                        <h2>DermaScan</h2>
+                        <p class="project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
+                        <p class="project-card__description">
+                            Derma Scan AI is an application designed to help users analyze their skin condition using AI technologies.
+                            The goal is to provide an accessible and accurate way to detect possible skin issues early through image
+                            analysis.
+                        </p>
+                        <div class="project-card__tags">
+                            <span>Mobile</span>
+                            <span>AI</span>
+                            <span>Healthcare</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card project-card--games" data-categories="games">
+                    <div class="project-card__media">
+                        <span class="project-card__category">Games</span>
+                        <div class="project-card__art project-card__art--placeholder">
+                            <div class="project-card__placeholder">
+                                <p>Echoes</p>
+                                <span>Open-World 3D Puzzle</span>
+                            </div>
+                        </div>
+                        <p class="project-card__semester">3rd Year - 2nd Semester</p>
+                    </div>
+                    <div class="project-card__content">
+                        <p class="project-card__eyebrow">3RD YEAR - 2ND SEMESTER</p>
+                        <h2>Echoes of the Lighthouse</h2>
+                        <p class="project-card__role"><strong>Role:</strong> GAME ARTIST</p>
+                        <p class="project-card__description">
+                            An open-world 3D exploration and puzzle-based game combining immersive storytelling, sound-based navigation,
+                            and NFT-based digital asset integration.
+                        </p>
+                        <div class="project-card__tags">
+                            <span>Games</span>
+                            <span>3D</span>
+                            <span>Puzzle</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
