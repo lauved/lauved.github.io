@@ -8,6 +8,7 @@
     const homeProjectCards = document.querySelectorAll(".home-project-card");
     const contactForms = document.querySelectorAll(".contact-form");
     const interactiveDotGrid = document.getElementById("interactiveDotGrid");
+    const navSectionLinks = document.querySelectorAll('.nav__links a[href^="#"]');
 
     const initThemeToggle = () => {
         if (!themeToggle) {
@@ -132,6 +133,143 @@
         });
     };
 
+    const initNavScrollSpy = () => {
+        if (!navSectionLinks.length) {
+            return;
+        }
+
+        const nav = document.querySelector(".nav");
+        const sections = Array.from(navSectionLinks)
+            .map((link) => {
+                const href = link.getAttribute("href") || "";
+                const id = href.startsWith("#") ? href.slice(1) : "";
+                const section = id ? document.getElementById(id) : null;
+
+                if (!(section instanceof HTMLElement)) {
+                    return null;
+                }
+
+                return { id, link, section };
+            })
+            .filter(Boolean);
+
+        if (!sections.length) {
+            return;
+        }
+
+        const setActiveLink = (activeId) => {
+            sections.forEach(({ id, link }) => {
+                if (id === activeId) {
+                    link.setAttribute("aria-current", "page");
+                    return;
+                }
+
+                link.removeAttribute("aria-current");
+            });
+        };
+
+        const updateActiveLink = () => {
+            const navOffset = nav instanceof HTMLElement ? nav.offsetHeight + 28 : 120;
+            let activeId = sections[0].id;
+
+            sections.forEach(({ id, section }) => {
+                if (section.getBoundingClientRect().top - navOffset <= 0) {
+                    activeId = id;
+                }
+            });
+
+            setActiveLink(activeId);
+        };
+
+        updateActiveLink();
+        window.addEventListener("scroll", updateActiveLink, { passive: true });
+        window.addEventListener("resize", updateActiveLink);
+        window.addEventListener("hashchange", updateActiveLink);
+    };
+
+    const initTextRevealHeadings = () => {
+        const headings = document.querySelectorAll("[data-text-reveal]");
+
+        if (!headings.length) {
+            return;
+        }
+
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        const splitNode = (node, wordIndexRef) => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const fragment = document.createDocumentFragment();
+                const parts = (node.textContent || "").split(/(\s+)/);
+
+                parts.forEach((part) => {
+                    if (!part) {
+                        return;
+                    }
+
+                    if (/^\s+$/.test(part)) {
+                        fragment.appendChild(document.createTextNode(part));
+                        return;
+                    }
+
+                    const word = document.createElement("span");
+                    word.className = "reveal-word";
+                    word.style.setProperty("--word-index", String(wordIndexRef.value));
+                    word.textContent = part;
+                    fragment.appendChild(word);
+                    wordIndexRef.value += 1;
+                });
+
+                return fragment;
+            }
+
+            if (!(node instanceof HTMLElement)) {
+                return node.cloneNode(true);
+            }
+
+            const clone = node.cloneNode(false);
+
+            Array.from(node.childNodes).forEach((child) => {
+                clone.appendChild(splitNode(child, wordIndexRef));
+            });
+
+            return clone;
+        };
+
+        headings.forEach((heading) => {
+            const wordIndexRef = { value: 0 };
+            const fragment = document.createDocumentFragment();
+
+            Array.from(heading.childNodes).forEach((child) => {
+                fragment.appendChild(splitNode(child, wordIndexRef));
+            });
+
+            heading.replaceChildren(fragment);
+        });
+
+        if (prefersReducedMotion) {
+            headings.forEach((heading) => {
+                heading.classList.add("is-visible");
+            });
+            return;
+        }
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    entry.target.classList.toggle("is-visible", entry.isIntersecting);
+                });
+            },
+            {
+                threshold: 0.35,
+                rootMargin: "0px 0px -10% 0px",
+            }
+        );
+
+        headings.forEach((heading) => {
+            observer.observe(heading);
+        });
+    };
+
     const initInteractiveDotGrid = () => {
         if (!(interactiveDotGrid instanceof HTMLCanvasElement)) {
             return;
@@ -153,8 +291,8 @@
         };
 
         const palette = {
-            base: "52, 70, 97",
-            active: "46, 96, 168",
+            base: "156, 156, 156",
+            active: "19, 19, 19",
         };
 
         let width = 0;
@@ -261,6 +399,8 @@
     };
 
     initThemeToggle();
+    initNavScrollSpy();
+    initTextRevealHeadings();
     initProjectFilters();
     initHomeProjectPreview();
     initContactForms();

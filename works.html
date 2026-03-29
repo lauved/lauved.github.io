@@ -19,19 +19,23 @@
 
 <div class="site-content">
     <nav class="nav">
-        <div class="logo">L</div>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="works.html">Works</a></li>
-            <li><a href="contact.html">Contact</a></li>
-            <li>
+        <a href="index.html" class="logo" aria-label="Go to the homepage">L</a>
+        <div class="nav__group">
+            <ul class="nav__links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="works.html" aria-current="page">Works</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <div class="nav__actions">
+                <a href="assets/resume.pdf" class="nav-resume" target="_blank" rel="noopener">Resume</a>
                 <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
                     <span class="theme-toggle__icon" aria-hidden="true">&#9789;</span>
                     <span class="theme-toggle__text">Dark</span>
                 </button>
-            </li>
-        </ul>
+            </div>
+        </div>
     </nav>
 
     <main class="site-main">
@@ -57,9 +61,7 @@
                 <article class="project-card project-card--web" data-categories="web">
                     <div class="project-card__media">
                         <span class="project-card__category">Web</span>
-                        <div class="project-card__art">
-                            <img src="sneakhub.png" alt="SneakHub project preview" />
-                        </div>
+                        <div class="project-card__art gradient-art gradient-art--sneakhub" aria-hidden="true"></div>
                         <p class="project-card__semester">1st Year - 2nd Semester</p>
                     </div>
                     <div class="project-card__content">
@@ -84,12 +86,7 @@
                 <article class="project-card project-card--web" data-categories="web">
                     <div class="project-card__media">
                         <span class="project-card__category">Web</span>
-                        <div class="project-card__art project-card__art--placeholder">
-                            <div class="project-card__placeholder">
-                                <p>BMI</p>
-                                <span>Calculator App</span>
-                            </div>
-                        </div>
+                        <div class="project-card__art gradient-art gradient-art--bmi" aria-hidden="true"></div>
                         <p class="project-card__semester">1st Year - 2nd Semester</p>
                     </div>
                     <div class="project-card__content">
@@ -111,9 +108,7 @@
                 <article class="project-card project-card--games" data-categories="mobile games">
                     <div class="project-card__media">
                         <span class="project-card__category">Mobile / Games</span>
-                        <div class="project-card__art">
-                            <img src="petpal.png" alt="PetPal project preview" loading="lazy" />
-                        </div>
+                        <div class="project-card__art gradient-art gradient-art--petpal" aria-hidden="true"></div>
                         <p class="project-card__semester">2nd Year - 1st Sem</p>
                     </div>
                     <div class="project-card__content">
@@ -137,9 +132,7 @@
                 <article class="project-card project-card--mobile" data-categories="mobile web">
                     <div class="project-card__media">
                         <span class="project-card__category">Mobile / Web</span>
-                        <div class="project-card__art">
-                            <img src="baskit.png" alt="Baskit project preview" loading="lazy" />
-                        </div>
+                        <div class="project-card__art gradient-art gradient-art--baskit" aria-hidden="true"></div>
                         <p class="project-card__semester">2nd Year - 2nd Semester</p>
                     </div>
                     <div class="project-card__content">
@@ -164,12 +157,7 @@
                 <article class="project-card project-card--ai" data-categories="mobile ai">
                     <div class="project-card__media">
                         <span class="project-card__category">Mobile / AI</span>
-                        <div class="project-card__art">
-                            <picture>
-                                <source srcset="haha.avif" type="image/avif" />
-                                <img src="haha.png" alt="DermaScan project preview" loading="lazy" />
-                            </picture>
-                        </div>
+                        <div class="project-card__art gradient-art gradient-art--dermascan" aria-hidden="true"></div>
                         <p class="project-card__semester">3rd Year - 1st Semester</p>
                     </div>
                     <div class="project-card__content">
@@ -192,12 +180,7 @@
                 <article class="project-card project-card--games" data-categories="games">
                     <div class="project-card__media">
                         <span class="project-card__category">Games</span>
-                        <div class="project-card__art project-card__art--placeholder">
-                            <div class="project-card__placeholder">
-                                <p>Echoes</p>
-                                <span>Open-World 3D Puzzle</span>
-                            </div>
-                        </div>
+                        <div class="project-card__art gradient-art gradient-art--echoes" aria-hidden="true"></div>
                         <p class="project-card__semester">3rd Year - 2nd Semester</p>
                     </div>
                     <div class="project-card__content">

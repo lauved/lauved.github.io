@@ -18,25 +18,28 @@
 
 <div class="site-content">
     <nav class="nav">
-        <div class="logo">L</div>
-        <ul>
-            <li><a href="#home-top">Home</a></li>
-            <li><a href="#home-about">About</a></li>
-            <li><a href="#home-works">Works</a></li>
-            <li><a href="#home-contact">Contact</a></li>
-            <li>
+        <a href="#home-top" class="logo" aria-label="Go to the top of the homepage">TL</a>
+        <div class="nav__group">
+            <ul class="nav__links">
+                <li><a href="#home-top" aria-current="page">Home</a></li>
+                <li><a href="#home-about">About</a></li>
+                <li><a href="#home-works">Works</a></li>
+                <li><a href="#home-contact">Contact</a></li>
+            </ul>
+
+            <div class="nav__actions">
+                <a href="assets/resume.pdf" class="nav-resume" target="_blank" rel="noopener">Resume</a>
                 <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
                     <span class="theme-toggle__icon" aria-hidden="true">&#9789;</span>
                     <span class="theme-toggle__text">Dark</span>
                 </button>
-            </li>
-        </ul>
+            </div>
+        </div>
     </nav>
 
-    <main class="site-main" id="home-top">
-        <section class="hero hero--home">
+    <main class="site-main">
+        <section class="hero hero--home" id="home-top">
             <div class="hero-text">
-                <p class="section-label">Portfolio</p>
                 <h1>creative designer<br>& developer.</h1>
                 <p>
                     Hi, I'm <strong>Terrence Lappay</strong>. I build clean, modern experiences across web, mobile, games, and AI-focused
@@ -44,7 +47,7 @@
                 </p>
 
                 <div class="hero-actions">
-                    <a href="#home-about" class="cta">View Resume</a>
+                    <a href="assets/resume.pdf" class="cta" target="_blank" rel="noopener">View Resume</a>
                 </div>
 
                 <div class="socials">
@@ -53,77 +56,81 @@
                 </div>
             </div>
 
-            <aside class="hero-panel">
-                <p class="section-label">Current Focus</p>
-                <h2>Designing intentional interfaces and turning them into polished front-end builds.</h2>
-                <p>
-                    I enjoy shaping student and portfolio projects that feel modern, readable, and grounded in practical UI/UX thinking.
-                </p>
-                <div class="pill-row">
-                    <span class="pill">UI/UX Design</span>
-                    <span class="pill">Front-End Development</span>
-                    <span class="pill">Mobile Concepts</span>
-                    <span class="pill">Game Visuals</span>
-                </div>
-            </aside>
         </section>
 
         <section class="home-section about-showcase" id="home-about">
-            <article class="profile-card">
-                <div class="profile-card__media">
-                    <img src="profile.png" alt="Portrait of Terrence Lappay" />
-                </div>
-
-                <div class="profile-card__body">
-                    <h2>Terrence Lappay</h2>
-                    <p class="profile-card__role">UI/UX Designer - Front-End Developer</p>
-
-                    <div class="profile-card__meta">
-                        <div>
-                            <p class="section-label">Based In</p>
-                            <p>Pangasinan, Philippines</p>
-                        </div>
-                        <div>
-                            <p class="section-label">Primary Focus</p>
-                            <p>Execution-driven interface design and front-end implementation</p>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <article class="about-overview">
-                <p class="about-overview__lead">
-                    As a UI/UX Designer and Front-End Developer, I focus on turning ideas into clear, usable, and polished digital
-                    experiences. I enjoy moving from planning and visual direction into implementation so the final output feels both
-                    intentional and functional.
+            <div class="section-heading section-heading--centered section-heading--compact about-showcase__intro">
+                <p class="section-label">About</p>
+                <h2 class="scroll-reveal-heading" data-text-reveal>Designing clear interfaces with practical front-end execution.</h2>
+                <p>
+                    I turn ideas into usable, polished digital experiences by combining interface thinking, visual clarity, and
+                    implementation.
                 </p>
+            </div>
 
-                <ul class="about-points">
-                    <li>Translate concepts into structured, modern interface decisions.</li>
-                    <li>Build responsive front-end experiences across web and mobile-focused projects.</li>
-                    <li>Bring creativity from design, game visuals, and interaction thinking into each build.</li>
-                </ul>
-
-                <div class="skills-panel">
-                    <p class="section-label">Skills</p>
-                    <div class="pill-row">
-                        <span class="pill">UI/UX Design</span>
-                        <span class="pill">Frontend Development</span>
-                        <span class="pill">Responsive Layouts</span>
-                        <span class="pill">HTML / CSS / JavaScript</span>
-                        <span class="pill">Mobile UI Concepts</span>
-                        <span class="pill">Game Art</span>
-                        <span class="pill">Wireframing</span>
-                        <span class="pill">Visual Design</span>
+            <div class="about-showcase__grid">
+                <article class="profile-card">
+                    <div class="profile-card__media">
+                        <img src="assets/me.png" alt="Portrait of Terrence Lappay" />
                     </div>
-                </div>
-            </article>
+
+                    <div class="profile-card__body">
+                        <h2>Terrence Lappay</h2>
+                        <p class="profile-card__role">UI/UX Designer - Front-End Developer</p>
+
+                        <div class="profile-card__meta">
+                            <div>
+                                <p class="section-label">Based In</p>
+                                <p>Pangasinan, Philippines</p>
+                            </div>
+                            <div>
+                                <p class="section-label">Primary Focus</p>
+                                <p>Execution-driven interface design and front-end implementation</p>
+                            </div>
+                        </div>
+
+                        <div class="profile-card__actions">
+                            <a href="assets/resume.pdf" class="cta" target="_blank" rel="noopener">Open Resume</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="about-overview">
+                    <p class="about-overview__lead">
+                        As a UI/UX Designer and Front-End Developer, I focus on turning ideas into clear, usable, and polished digital
+                        experiences. I enjoy moving from planning and visual direction into implementation so the final output feels both
+                        intentional and functional.
+                    </p>
+
+                    <ul class="about-points">
+                        <li>Translate concepts into structured, modern interface decisions.</li>
+                        <li>Build responsive front-end experiences across web and mobile-focused projects.</li>
+                        <li>Bring creativity from design, game visuals, and interaction thinking into each build.</li>
+                    </ul>
+
+                    <div class="skills-panel">
+                        <p class="section-label">Skills</p>
+                        <div class="pill-row">
+                            <span class="pill">UI/UX Design</span>
+                            <span class="pill">Frontend Development</span>
+                            <span class="pill">Responsive Layouts</span>
+                            <span class="pill">HTML / CSS / JavaScript</span>
+                            <span class="pill">Mobile UI Concepts</span>
+                            <span class="pill">Game Art</span>
+                            <span class="pill">Wireframing</span>
+                            <span class="pill">Visual Design</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
         </section>
 
         <section class="home-section home-projects" id="home-works">
-            <div class="section-heading">
+            <div class="section-heading section-heading--centered section-heading--compact">
                 <p class="section-label">Works</p>
-                <h2>Projects built across web, mobile, AI, and games.</h2>
+                <h2 class="scroll-reveal-heading" data-text-reveal>
+                    Projects built across <span class="scroll-reveal-heading__accent">web, mobile, AI, and games.</span>
+                </h2>
                 <p>Explore one highlighted project per category here, then open the full works page to see the complete collection.</p>
             </div>
 
@@ -139,12 +146,7 @@
                 <article class="home-project-card home-project-card--ai" data-home-preview="all">
                     <div class="home-project-card__media">
                         <span class="home-project-card__category">Featured</span>
-                        <div class="home-project-card__art">
-                            <picture>
-                                <source srcset="haha.avif" type="image/avif" />
-                                <img src="haha.png" alt="DermaScan featured preview" loading="lazy" />
-                            </picture>
-                        </div>
+                        <div class="home-project-card__art gradient-art gradient-art--dermascan" aria-hidden="true"></div>
                         <p class="home-project-card__semester">3rd Year - 1st Semester</p>
                     </div>
                     <div class="home-project-card__content">
@@ -166,9 +168,7 @@
                 <article class="home-project-card home-project-card--web" data-home-preview="web" hidden>
                     <div class="home-project-card__media">
                         <span class="home-project-card__category">Web</span>
-                        <div class="home-project-card__art">
-                            <img src="sneakhub.png" alt="SneakHub preview" loading="lazy" />
-                        </div>
+                        <div class="home-project-card__art gradient-art gradient-art--sneakhub" aria-hidden="true"></div>
                         <p class="home-project-card__semester">1st Year - 2nd Semester</p>
                     </div>
                     <div class="home-project-card__content">
@@ -190,12 +190,7 @@
                 <article class="home-project-card home-project-card--games" data-home-preview="games" hidden>
                     <div class="home-project-card__media">
                         <span class="home-project-card__category">Games</span>
-                        <div class="home-project-card__art home-project-card__art--placeholder">
-                            <div class="home-project-card__placeholder">
-                                <p>Echoes</p>
-                                <span>Open-World 3D Puzzle</span>
-                            </div>
-                        </div>
+                        <div class="home-project-card__art gradient-art gradient-art--echoes" aria-hidden="true"></div>
                         <p class="home-project-card__semester">3rd Year - 2nd Semester</p>
                     </div>
                     <div class="home-project-card__content">
@@ -217,9 +212,7 @@
                 <article class="home-project-card home-project-card--mobile" data-home-preview="mobile" hidden>
                     <div class="home-project-card__media">
                         <span class="home-project-card__category">Mobile</span>
-                        <div class="home-project-card__art">
-                            <img src="baskit.png" alt="Baskit preview" loading="lazy" />
-                        </div>
+                        <div class="home-project-card__art gradient-art gradient-art--baskit" aria-hidden="true"></div>
                         <p class="home-project-card__semester">2nd Year - 2nd Semester</p>
                     </div>
                     <div class="home-project-card__content">
@@ -241,12 +234,7 @@
                 <article class="home-project-card home-project-card--ai" data-home-preview="ai" hidden>
                     <div class="home-project-card__media">
                         <span class="home-project-card__category">AI</span>
-                        <div class="home-project-card__art">
-                            <picture>
-                                <source srcset="haha.avif" type="image/avif" />
-                                <img src="haha.png" alt="DermaScan AI preview" loading="lazy" />
-                            </picture>
-                        </div>
+                        <div class="home-project-card__art gradient-art gradient-art--dermascan" aria-hidden="true"></div>
                         <p class="home-project-card__semester">3rd Year - 1st Semester</p>
                     </div>
                     <div class="home-project-card__content">
@@ -272,9 +260,11 @@
         </section>
 
         <section class="home-section home-contact" id="home-contact">
-            <div class="section-heading">
+            <div class="section-heading section-heading--centered section-heading--compact">
                 <p class="section-label">Contact</p>
-                <h2>Let's build something meaningful.</h2>
+                <h2 class="scroll-reveal-heading" data-text-reveal>
+                    Let's <span class="scroll-reveal-heading__accent">build something meaningful.</span>
+                </h2>
                 <p>
                     Whether it's a collaboration, internship role, or software project, I'm open to discussing ideas with clear impact.
                 </p>
