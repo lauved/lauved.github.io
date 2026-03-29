@@ -357,6 +357,8 @@ body {
 
 .scroll-reveal-heading {
     overflow: hidden;
+    padding-bottom: 0.14em;
+    margin-bottom: calc(14px - 0.14em);
 }
 
 .scroll-reveal-heading__accent {
