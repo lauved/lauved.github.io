@@ -9,6 +9,8 @@
     const contactForms = document.querySelectorAll(".contact-form");
     const interactiveDotGrid = document.getElementById("interactiveDotGrid");
     const navSectionLinks = document.querySelectorAll('.nav__links a[href^="#"]');
+    const copyEmailButtons = document.querySelectorAll("[data-copy-email]");
+    const currentYearTargets = document.querySelectorAll("[data-current-year]");
 
     const initThemeToggle = () => {
         if (!themeToggle) {
@@ -398,6 +400,75 @@
         draw();
     };
 
+    const copyTextToClipboard = async (value) => {
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+            await navigator.clipboard.writeText(value);
+            return;
+        }
+
+        const helper = document.createElement("textarea");
+        helper.value = value;
+        helper.setAttribute("readonly", "");
+        helper.style.position = "fixed";
+        helper.style.opacity = "0";
+        helper.style.pointerEvents = "none";
+        document.body.appendChild(helper);
+        helper.focus();
+        helper.select();
+
+        const didCopy = document.execCommand("copy");
+        helper.remove();
+
+        if (!didCopy) {
+            throw new Error("Clipboard copy failed");
+        }
+    };
+
+    const initFooterUtilities = () => {
+        currentYearTargets.forEach((target) => {
+            target.textContent = String(new Date().getFullYear());
+        });
+
+        if (!copyEmailButtons.length) {
+            return;
+        }
+
+        copyEmailButtons.forEach((button) => {
+            if (!(button instanceof HTMLButtonElement)) {
+                return;
+            }
+
+            const defaultLabel = button.textContent.trim() || "Copy";
+            let resetTimer = 0;
+
+            button.addEventListener("click", async () => {
+                const email = button.dataset.copyEmail || "";
+
+                if (!email) {
+                    return;
+                }
+
+                button.disabled = true;
+
+                try {
+                    await copyTextToClipboard(email);
+                    button.textContent = "Copied";
+                    button.classList.add("is-copied");
+                } catch (error) {
+                    button.textContent = "Try again";
+                    button.classList.remove("is-copied");
+                }
+
+                window.clearTimeout(resetTimer);
+                resetTimer = window.setTimeout(() => {
+                    button.textContent = defaultLabel;
+                    button.disabled = false;
+                    button.classList.remove("is-copied");
+                }, 1600);
+            });
+        });
+    };
+
     initThemeToggle();
     initNavScrollSpy();
     initTextRevealHeadings();
@@ -405,4 +476,5 @@
     initHomeProjectPreview();
     initContactForms();
     initInteractiveDotGrid();
+    initFooterUtilities();
 })();

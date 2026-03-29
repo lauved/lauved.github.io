@@ -37,7 +37,7 @@
         </div>
     </nav>
 
-    <main class="site-main">
+    <main class="site-main site-main--home">
         <section class="hero hero--home" id="home-top">
             <div class="hero-text">
                 <h1>creative designer<br>& developer.</h1>
@@ -108,7 +108,7 @@
                         <li>Bring creativity from design, game visuals, and interaction thinking into each build.</li>
                     </ul>
 
-                    <div class="skills-panel">
+                    <div class="skills-panel" id="home-skills">
                         <p class="section-label">Skills</p>
                         <div class="pill-row">
                             <span class="pill">UI/UX Design</span>
@@ -312,6 +312,64 @@
             </div>
         </section>
     </main>
+
+    <footer class="site-footer" aria-labelledby="siteFooterHeading">
+        <div class="site-footer__inner">
+            <div class="site-footer__grid">
+                <div class="site-footer__brand">
+                    <h2 id="siteFooterHeading">Terrence Lappay</h2>
+                    <p>
+                        Creative designer and front-end developer focused on building practical, user-centered digital experiences
+                        with clean execution.
+                    </p>
+
+                    <div class="site-footer__socials" aria-label="Social links">
+                        <a href="https://github.com/lauved" target="_blank" rel="noopener" aria-label="Visit Terrence Lappay on GitHub">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 2C6.48 2 2 6.59 2 12.26c0 4.53 2.87 8.37 6.84 9.72.5.09.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.46-1.19-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.86.09-.67.35-1.12.63-1.37-2.22-.26-4.56-1.15-4.56-5.11 0-1.13.39-2.05 1.03-2.77-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.06A9.35 9.35 0 0 1 12 6.84c.85 0 1.71.12 2.51.36 1.91-1.34 2.75-1.06 2.75-1.06.55 1.41.2 2.45.1 2.71.64.72 1.03 1.64 1.03 2.77 0 3.97-2.34 4.84-4.57 5.1.36.32.68.95.68 1.92 0 1.39-.01 2.51-.01 2.85 0 .27.18.59.69.49A10.29 10.29 0 0 0 22 12.26C22 6.59 17.52 2 12 2Z" />
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/terrence-paras-lappay-6337353a8/" target="_blank" rel="noopener" aria-label="Visit Terrence Lappay on LinkedIn">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M6.94 8.5A1.56 1.56 0 1 1 6.93 5.4a1.56 1.56 0 0 1 .01 3.1Zm-1.4 2.12h2.8V19h-2.8v-8.38ZM10 10.62h2.69v1.14h.04c.37-.71 1.29-1.46 2.66-1.46 2.85 0 3.37 1.92 3.37 4.42V19h-2.8v-3.8c0-.91-.02-2.08-1.24-2.08-1.24 0-1.43.99-1.43 2.02V19H10v-8.38Z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="site-footer__column">
+                    <p class="site-footer__label">Navigation</p>
+                    <nav class="site-footer__nav" aria-label="Footer navigation">
+                        <a href="#home-about">About</a>
+                        <a href="#home-works">Projects</a>
+                        <a href="#home-skills">Skills</a>
+                        <a href="#home-contact">Contact</a>
+                    </nav>
+                </div>
+
+                <div class="site-footer__column">
+                    <p class="site-footer__label">Contact</p>
+                    <div class="site-footer__contact">
+                        <p>Pangasinan, Philippines</p>
+                        <a href="mailto:tepa.lappay.up@phinmaed.com">tepa.lappay.up@phinmaed.com</a>
+                        <button
+                            class="site-footer__copy"
+                            type="button"
+                            data-copy-email="tepa.lappay.up@phinmaed.com"
+                            aria-label="Copy email address"
+                        >
+                            Copy
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="site-footer__bottom">
+                <p>&copy; <span data-current-year>2026</span> Terrence Lappay. All rights reserved.</p>
+                <a href="#home-top">Back to top <span aria-hidden="true">&#8593;</span></a>
+            </div>
+        </div>
+    </footer>
 </div>
 
 <script src="script.js"></script>
