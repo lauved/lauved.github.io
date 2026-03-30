@@ -121,6 +121,25 @@
                             <span class="pill">Visual Design</span>
                         </div>
                     </div>
+
+                    <div class="tools-panel" id="home-tech-tools">
+                        <p class="section-label">Tech &amp; Tools</p>
+                        <div class="pill-row">
+                            <span class="pill">Flutter</span>
+                            <span class="pill">Dart</span>
+                            <span class="pill">Kotlin</span>
+                            <span class="pill">HTML5</span>
+                            <span class="pill">CSS3</span>
+                            <span class="pill">JavaScript</span>
+                            <span class="pill">AWS</span>
+                            <span class="pill">GitHub Actions</span>
+                            <span class="pill">Unity</span>
+                            <span class="pill">Blender</span>
+                            <span class="pill">GitHub</span>
+                            <span class="pill">VS Code</span>
+                            <span class="pill">Figma</span>
+                        </div>
+                    </div>
                 </article>
             </div>
         </section>
@@ -309,6 +328,66 @@
 
                     <button class="contact-submit" type="submit">Send Message</button>
                 </form>
+            </div>
+        </section>
+
+        <section class="home-section home-game" id="home-game">
+            <div class="section-heading section-heading--centered section-heading--compact">
+                <p class="section-label">Mini Game</p>
+                <h2 class="scroll-reveal-heading" data-text-reveal>
+                    Try a quick <span class="scroll-reveal-heading__accent">offline-inspired dino run.</span>
+                </h2>
+                <p>
+                    Jump over incoming obstacles with <strong>Space</strong>, <strong>Arrow Up</strong>, or a tap on the game area.
+                </p>
+            </div>
+
+            <div class="home-game-grid">
+                <article class="game-info-card">
+                    <p class="section-label">Controls</p>
+                    <h3>Portfolio Dino Run</h3>
+                    <p>
+                        A small endless runner built into the site for fun. Keep the dino moving, clear the cacti, and chase your best
+                        score.
+                    </p>
+
+                    <div class="game-stats" aria-live="polite">
+                        <div class="game-stat">
+                            <span class="game-stat__label">Score</span>
+                            <strong data-runner-score>0</strong>
+                        </div>
+                        <div class="game-stat">
+                            <span class="game-stat__label">Best</span>
+                            <strong data-runner-best>0</strong>
+                        </div>
+                    </div>
+
+                    <div class="pill-row game-pills" aria-label="Game controls">
+                        <span class="pill">Space</span>
+                        <span class="pill">Arrow Up</span>
+                        <span class="pill">Tap to Jump</span>
+                    </div>
+
+                    <button class="contact-submit game-action" type="button" data-runner-action>Start Game</button>
+                </article>
+
+                <article class="game-stage-card">
+                    <div class="game-stage__top">
+                        <p class="section-label">Arcade Mode</p>
+                        <p class="game-stage__message" data-runner-message aria-live="polite">Press Start or jump to begin.</p>
+                    </div>
+
+                    <div class="game-canvas-shell">
+                        <canvas
+                            class="runner-canvas"
+                            id="runnerCanvas"
+                            width="760"
+                            height="260"
+                            aria-label="A dinosaur runner mini game"
+                        ></canvas>
+                        <button class="game-jump-button" type="button" data-runner-jump>Jump</button>
+                    </div>
+                </article>
             </div>
         </section>
     </main>

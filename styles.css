@@ -277,6 +277,8 @@ body {
 .highlight-card,
 .info-card,
 .stack-panel,
+.game-info-card,
+.game-stage-card,
 .contact-card-panel,
 .contact-details-card,
 .contact-form-card,
@@ -595,6 +597,10 @@ body {
 
 .skills-panel {
     padding-top: 6px;
+}
+
+.tools-panel {
+    margin-top: 28px;
 }
 
 /* =======================
@@ -970,6 +976,159 @@ body {
 :root[data-theme="dark"] .contact-submit,
 :root[data-theme="dark"] .home-filter-chip.is-active {
     color: #131313;
+}
+
+/* =======================
+   HOME GAME
+======================= */
+.home-game {
+    padding-top: 8px;
+}
+
+.home-game-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 320px) 1fr;
+    gap: 24px;
+    align-items: stretch;
+}
+
+.game-info-card,
+.game-stage-card {
+    padding: 30px;
+}
+
+.game-info-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.game-info-card h3 {
+    margin-bottom: 14px;
+    font-size: 32px;
+    line-height: 1.08;
+    letter-spacing: -1px;
+}
+
+.game-info-card > p:last-of-type {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+.game-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 26px 0 22px;
+}
+
+.game-stat {
+    display: grid;
+    gap: 8px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--surface-strong);
+}
+
+.game-stat__label {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.game-stat strong {
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.game-pills {
+    margin-bottom: 24px;
+}
+
+.game-action {
+    width: 100%;
+    margin-top: auto;
+}
+
+.game-stage-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.game-stage__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px 16px;
+}
+
+.game-stage__top .section-label {
+    margin-bottom: 0;
+}
+
+.game-stage__message {
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.6;
+    text-align: right;
+}
+
+.game-canvas-shell {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at top right, rgba(var(--bg-accent-rgb), 0.08), transparent 28%),
+        linear-gradient(180deg, rgba(var(--bg-accent-rgb), 0.04), transparent 52%),
+        var(--surface-strong);
+}
+
+.runner-canvas {
+    display: block;
+    width: 100%;
+    height: clamp(220px, 30vw, 280px);
+    touch-action: manipulation;
+}
+
+.game-jump-button {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    min-height: 42px;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: var(--shadow);
+    transition:
+        transform 0.2s ease,
+        border-color 0.3s ease,
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
+
+.game-jump-button:hover {
+    transform: translateY(-1px);
+    border-color: var(--inverse-bg);
+    background: var(--inverse-bg);
+    color: var(--inverse-text);
+}
+
+:root[data-theme="dark"] .game-jump-button {
+    background: rgba(20, 26, 36, 0.84);
 }
 
 /* =======================
@@ -1356,6 +1515,7 @@ body {
     .about-showcase__grid,
     .home-project-card,
     .home-contact-grid,
+    .home-game-grid,
     .page-hero,
     .info-grid,
     .contact-page-grid {
@@ -1466,6 +1626,8 @@ body {
     .highlight-card,
     .info-card,
     .stack-panel,
+    .game-info-card,
+    .game-stage-card,
     .contact-card-panel,
     .contact-details-card,
     .contact-form-card,
@@ -1488,6 +1650,23 @@ body {
         font-size: 15px;
     }
 
+    .game-info-card h3 {
+        font-size: 30px;
+    }
+
+    .game-stage__message {
+        width: 100%;
+        text-align: left;
+    }
+
+    .game-stats {
+        gap: 12px;
+    }
+
+    .game-stat strong {
+        font-size: 30px;
+    }
+
     .home-project-card__media {
         min-height: 250px;
         padding: 18px;
@@ -1495,6 +1674,15 @@ body {
 
     .stack-panel {
         margin: 0 24px 72px;
+    }
+
+    .runner-canvas {
+        height: 240px;
+    }
+
+    .game-jump-button {
+        right: 12px;
+        bottom: 12px;
     }
 
     .home-section {
