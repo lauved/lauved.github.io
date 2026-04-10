@@ -290,24 +290,34 @@
             return;
         }
 
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
         const pointer = {
             x: window.innerWidth / 2,
             y: window.innerHeight / 2,
             targetX: window.innerWidth / 2,
             targetY: window.innerHeight / 2,
-            intensity: 0,
-            targetIntensity: 0,
+            intensity: 0.72,
+            targetIntensity: 0.72,
+            active: false,
         };
 
         const palette = {
-            base: "156, 156, 156",
-            active: "19, 19, 19",
+            glow: "255, 255, 255",
+            smoke: "12, 12, 12",
+            haze: "26, 26, 26",
         };
 
+        const smokeTrail = [];
+        const smokePuffs = [];
         let width = 0;
         let height = 0;
         let dpr = 1;
         let themeKey = "";
+        let lastTime = performance.now();
+        let trailTimer = 0;
+        let smokeTimer = 0;
+
+        const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
         const updatePalette = () => {
             const nextThemeKey = root.getAttribute("data-theme") || "light";
@@ -319,8 +329,9 @@
             themeKey = nextThemeKey;
 
             const styles = getComputedStyle(root);
-            palette.base = styles.getPropertyValue("--grid-dot-rgb").trim() || palette.base;
-            palette.active = styles.getPropertyValue("--grid-dot-active-rgb").trim() || palette.active;
+            palette.glow = styles.getPropertyValue("--cursor-glow-rgb").trim() || palette.glow;
+            palette.smoke = styles.getPropertyValue("--cursor-smoke-rgb").trim() || palette.smoke;
+            palette.haze = styles.getPropertyValue("--cursor-haze-rgb").trim() || palette.haze;
         };
 
         const resize = () => {
@@ -336,75 +347,197 @@
             context.setTransform(dpr, 0, 0, dpr, 0, 0);
         };
 
-        const draw = () => {
+        const addSmokeTrail = (radius) => {
+            smokeTrail.unshift({
+                x: pointer.x,
+                y: pointer.y,
+                radius,
+                life: 1,
+                drift: Math.random() * Math.PI * 2,
+            });
+
+            const maxTrailLength = width < 768 ? 8 : 12;
+
+            if (smokeTrail.length > maxTrailLength) {
+                smokeTrail.length = maxTrailLength;
+            }
+        };
+
+        const addSmokePuffs = (speedFactor) => {
+            const puffCount = prefersReducedMotion.matches ? 1 : speedFactor > 0.42 ? 2 : 1;
+            const baseRadius = width < 768 ? 36 : 48;
+            const variance = width < 768 ? 22 : 30;
+            const spread = 14 + speedFactor * 18;
+
+            for (let index = 0; index < puffCount; index += 1) {
+                const angle = Math.random() * Math.PI * 2;
+                const offset = Math.random() * spread;
+
+                smokePuffs.push({
+                    x: pointer.x + Math.cos(angle) * offset,
+                    y: pointer.y + Math.sin(angle) * offset,
+                    radius: baseRadius + Math.random() * variance,
+                    life: 0,
+                    ttl: 0.8 + Math.random() * 0.9,
+                    vx: (Math.random() - 0.5) * (20 + speedFactor * 18),
+                    vy: -6 + (Math.random() - 0.5) * 10,
+                    wobble: Math.random() * Math.PI * 2,
+                });
+            }
+
+            const maxPuffs = width < 768 ? 14 : 22;
+
+            if (smokePuffs.length > maxPuffs) {
+                smokePuffs.splice(0, smokePuffs.length - maxPuffs);
+            }
+        };
+
+        const drawSoftCircle = (x, y, radius, color, alpha) => {
+            if (alpha <= 0 || radius <= 0) {
+                return;
+            }
+
+            const gradient = context.createRadialGradient(x, y, radius * 0.08, x, y, radius);
+            gradient.addColorStop(0, `rgba(${color}, ${alpha})`);
+            gradient.addColorStop(0.45, `rgba(${color}, ${alpha * 0.45})`);
+            gradient.addColorStop(1, `rgba(${color}, 0)`);
+
+            context.fillStyle = gradient;
+            context.beginPath();
+            context.arc(x, y, radius, 0, Math.PI * 2);
+            context.fill();
+        };
+
+        const draw = (time) => {
             updatePalette();
 
-            pointer.x += (pointer.targetX - pointer.x) * 0.16;
-            pointer.y += (pointer.targetY - pointer.y) * 0.16;
-            pointer.intensity += (pointer.targetIntensity - pointer.intensity) * 0.12;
+            const delta = Math.min((time - lastTime) / 1000, 0.05);
+            lastTime = time;
+
+            if (!pointer.active) {
+                if (prefersReducedMotion.matches) {
+                    pointer.targetX = width * 0.5;
+                    pointer.targetY = height * 0.28;
+                    pointer.targetIntensity = 0.34;
+                } else {
+                    pointer.targetX = width * 0.5 + Math.cos(time * 0.00032) * width * 0.14;
+                    pointer.targetY = height * 0.28 + Math.sin(time * 0.00024) * height * 0.08;
+                    pointer.targetIntensity = 0.44;
+                }
+            }
+
+            const deltaX = pointer.targetX - pointer.x;
+            const deltaY = pointer.targetY - pointer.y;
+            const distance = Math.hypot(deltaX, deltaY);
+            const speedFactor = clamp(distance / (width < 768 ? 78 : 110), 0, 1);
+
+            pointer.x += deltaX * Math.min(1, delta * 7.2);
+            pointer.y += deltaY * Math.min(1, delta * 7.2);
+            pointer.intensity += (pointer.targetIntensity - pointer.intensity) * Math.min(1, delta * 5.2);
 
             context.clearRect(0, 0, width, height);
 
-            const spacing = 30;
-            const baseRadius = width < 768 ? 1.55 : 1.85;
-            const maxBoost = width < 768 ? 5.1 : 6.1;
-            const influenceRadius = width < 768 ? 126 : 162;
+            const themeIsDark = themeKey === "dark";
+            const glowRadius = (width < 768 ? 150 : 220) * (0.86 + pointer.intensity * 0.38);
+            const glowHaloRadius = glowRadius * (themeIsDark ? 1.45 : 1.7);
+            const glowCoreAlpha = themeIsDark
+                ? 0.26 + pointer.intensity * 0.16
+                : 0.44 + pointer.intensity * 0.18;
+            const glowHaloAlpha = themeIsDark
+                ? 0.12 + pointer.intensity * 0.08
+                : 0.18 + pointer.intensity * 0.12;
 
-            for (let y = spacing / 2; y <= height; y += spacing) {
-                for (let x = spacing / 2; x <= width; x += spacing) {
-                    let influence = 0;
+            drawSoftCircle(pointer.x, pointer.y, glowHaloRadius, palette.glow, glowHaloAlpha);
+            drawSoftCircle(pointer.x, pointer.y, glowRadius, palette.glow, glowCoreAlpha);
+            drawSoftCircle(
+                pointer.x + glowRadius * 0.12,
+                pointer.y - glowRadius * 0.08,
+                glowRadius * 0.54,
+                palette.haze,
+                themeIsDark ? 0.06 : 0.08
+            );
 
-                    if (pointer.intensity > 0.001) {
-                        const distance = Math.hypot(x - pointer.x, y - pointer.y);
+            trailTimer += delta;
+            smokeTimer += delta;
 
-                        if (distance < influenceRadius) {
-                            const falloff = 1 - distance / influenceRadius;
-                            influence = falloff * falloff * pointer.intensity;
-                        }
-                    }
+            const trailInterval = prefersReducedMotion.matches ? 0.11 : 0.05;
+            const smokeInterval = prefersReducedMotion.matches ? 0.14 : Math.max(0.05, 0.11 - speedFactor * 0.05);
 
-                    const radius = baseRadius + influence * maxBoost;
-                    const alpha = 0.34 + influence * 0.66;
+            if (trailTimer >= trailInterval && pointer.intensity > 0.08) {
+                trailTimer = 0;
+                addSmokeTrail((width < 768 ? 84 : 118) * (0.82 + pointer.intensity * 0.28));
+            }
 
-                    context.fillStyle = influence > 0.04
-                        ? `rgba(${palette.active}, ${Math.min(alpha, 0.96)})`
-                        : `rgba(${palette.base}, 0.42)`;
-                    context.beginPath();
-                    context.arc(x, y, radius, 0, Math.PI * 2);
-                    context.fill();
+            if (smokeTimer >= smokeInterval && pointer.intensity > 0.14) {
+                smokeTimer = 0;
+                addSmokePuffs(speedFactor);
+            }
 
-                    if (influence > 0.16) {
-                        context.fillStyle = `rgba(${palette.active}, ${0.08 * influence})`;
-                        context.beginPath();
-                        context.arc(x, y, radius * 2.35, 0, Math.PI * 2);
-                        context.fill();
-                    }
+            for (let index = smokeTrail.length - 1; index >= 0; index -= 1) {
+                const plume = smokeTrail[index];
+                plume.life -= delta * (prefersReducedMotion.matches ? 0.9 : 0.74);
+                plume.radius += delta * (width < 768 ? 20 : 26);
+                plume.x += Math.cos(plume.drift + time * 0.0011) * delta * 5;
+                plume.y += Math.sin(plume.drift + time * 0.0009) * delta * 4 - delta * 10;
+
+                if (plume.life <= 0) {
+                    smokeTrail.splice(index, 1);
+                    continue;
                 }
+
+                const trailAlpha = plume.life * (themeIsDark ? 0.11 : 0.16);
+                drawSoftCircle(plume.x, plume.y, plume.radius, palette.smoke, trailAlpha);
+                drawSoftCircle(plume.x, plume.y, plume.radius * 0.62, palette.glow, trailAlpha * 0.16);
+            }
+
+            for (let index = smokePuffs.length - 1; index >= 0; index -= 1) {
+                const puff = smokePuffs[index];
+                puff.life += delta;
+                puff.radius += delta * (width < 768 ? 16 : 22);
+                puff.x += puff.vx * delta + Math.cos(puff.wobble + time * 0.0016) * delta * 5;
+                puff.y += puff.vy * delta - delta * 8;
+                puff.vx *= 0.992;
+                puff.vy *= 0.992;
+
+                if (puff.life >= puff.ttl) {
+                    smokePuffs.splice(index, 1);
+                    continue;
+                }
+
+                const lifeProgress = 1 - puff.life / puff.ttl;
+                const puffAlpha = lifeProgress * lifeProgress * (themeIsDark ? 0.12 : 0.18);
+
+                drawSoftCircle(puff.x, puff.y, puff.radius, palette.smoke, puffAlpha);
             }
 
             window.requestAnimationFrame(draw);
         };
 
         const onPointerMove = (event) => {
-            if (event.pointerType === "touch") {
-                return;
-            }
-
+            pointer.active = true;
             pointer.targetX = event.clientX;
             pointer.targetY = event.clientY;
             pointer.targetIntensity = 1;
         };
 
         const deactivatePointer = () => {
-            pointer.targetIntensity = 0;
+            pointer.active = false;
         };
 
-        window.addEventListener("pointermove", onPointerMove);
-        window.addEventListener("pointerleave", deactivatePointer);
+        window.addEventListener("pointermove", onPointerMove, { passive: true });
+        window.addEventListener("pointerdown", onPointerMove, { passive: true });
+        window.addEventListener("pointercancel", deactivatePointer);
+        window.addEventListener("blur", deactivatePointer);
+        document.documentElement.addEventListener("mouseleave", deactivatePointer);
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                deactivatePointer();
+            }
+        });
         window.addEventListener("resize", resize);
 
         resize();
-        draw();
+        window.requestAnimationFrame(draw);
     };
 
     const initRunnerGame = () => {

@@ -9,13 +9,14 @@
     --shadow: 0 18px 38px rgba(19, 19, 19, 0.08);
     --inverse-bg: #131313;
     --inverse-text: #fcfaf5;
-    --grid-dot-rgb: 156, 156, 156;
-    --grid-dot-active-rgb: 19, 19, 19;
     --brand: #131313;
     --brand-dark: #131313;
     --brand-soft: rgba(19, 19, 19, 0.08);
     --brand-shadow-rgb: 19, 19, 19;
     --bg-accent-rgb: 19, 19, 19;
+    --cursor-glow-rgb: 255, 255, 255;
+    --cursor-smoke-rgb: 12, 12, 12;
+    --cursor-haze-rgb: 26, 26, 26;
     --intro-duration: 2s;
     --intro-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -31,13 +32,14 @@
     --shadow: 0 18px 38px rgba(0, 0, 0, 0.35);
     --inverse-bg: #f7f1e8;
     --inverse-text: #0d1118;
-    --grid-dot-rgb: 118, 118, 118;
-    --grid-dot-active-rgb: 247, 241, 232;
     --brand: #f7f1e8;
     --brand-dark: #f7f1e8;
     --brand-soft: rgba(247, 241, 232, 0.12);
     --brand-shadow-rgb: 247, 241, 232;
     --bg-accent-rgb: 247, 241, 232;
+    --cursor-glow-rgb: 0, 0, 0;
+    --cursor-smoke-rgb: 255, 255, 255;
+    --cursor-haze-rgb: 240, 240, 240;
 }
 
 * {
@@ -53,16 +55,20 @@ html {
 
 body {
     background:
-        radial-gradient(circle at top right, rgba(var(--bg-accent-rgb), 0.08), transparent 32%),
-        linear-gradient(180deg, rgba(var(--bg-accent-rgb), 0.06), transparent 40%),
+        radial-gradient(circle at 18% 14%, rgba(var(--cursor-glow-rgb), 0.62), transparent 30%),
+        radial-gradient(circle at 82% 18%, rgba(var(--cursor-smoke-rgb), 0.1), transparent 34%),
+        radial-gradient(circle at 50% 100%, rgba(var(--cursor-haze-rgb), 0.08), transparent 40%),
+        linear-gradient(180deg, rgba(var(--cursor-smoke-rgb), 0.03), transparent 44%),
         var(--bg);
     color: var(--text);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
+    transition: background 0.6s ease, color 0.3s ease;
 }
 
 .site-page {
     position: relative;
     min-height: 100vh;
+    isolation: isolate;
 }
 
 .site-dot-grid {
@@ -70,14 +76,14 @@ body {
     inset: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 0;
+    z-index: 1;
     pointer-events: none;
-    opacity: 0.95;
+    opacity: 1;
 }
 
 .site-content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     min-height: 100vh;
 }
 
@@ -407,6 +413,7 @@ body {
         transition: none;
         animation: none;
     }
+
 }
 
 .section-heading p:last-child {
@@ -1651,7 +1658,7 @@ body {
 
 @media (max-width: 768px) {
     .site-dot-grid {
-        opacity: 0.88;
+        opacity: 0.96;
     }
 
     .site-main {
