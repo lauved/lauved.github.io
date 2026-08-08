@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BioTrack Case Study - Terrence Lappay</title>
+    <script>(() => { const saved = localStorage.getItem("portfolio-theme"); const preferred = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; document.documentElement.setAttribute("data-theme", saved || preferred); })();</script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="case-study.css" />
+</head>
+<body class="site-page">
+<canvas class="site-dot-grid" id="interactiveDotGrid" aria-hidden="true"></canvas>
+<div class="site-content">
+    <nav class="nav">
+        <a href="index.html" class="logo" aria-label="Go to the homepage">L</a>
+        <div class="nav__group"><ul class="nav__links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="works.html" aria-current="page">Works</a></li><li><a href="contact.html">Contact</a></li></ul><div class="nav__actions"><a href="assets/resume.pdf" class="nav-resume" target="_blank" rel="noopener">Resume</a><button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span class="theme-toggle__icon" aria-hidden="true">&#9789;</span><span class="theme-toggle__text">Dark</span></button></div></div>
+    </nav>
+    <main class="case-page">
+        <a class="case-back" href="works.html">&larr; Back to all works</a>
+        <section class="case-hero">
+            <div class="case-hero__copy"><p class="section-label">Project Case Study</p><h1>BioTrack</h1><p class="case-hero__lead">A cross-platform healthcare monitoring system designed to help patients understand their vital signs while giving providers secure, timely access to health records, alerts, and trends.</p><div class="case-tags"><span>Flutter</span><span>Next.js</span><span>React</span><span>Express</span><span>MongoDB</span><span>Blockchain</span></div></div>
+            <div class="case-hero__visual"><img src="assets/biotrackweb.png" alt="BioTrack secure healthcare sign-in experience" style="width:100%;object-fit:cover;object-position:center;border-radius:20px" /></div>
+        </section>
+        <div class="case-facts"><div class="case-fact"><span>Role</span><strong>UI/UX Designer &amp; Front-End Developer</strong></div><div class="case-fact"><span>Platform</span><strong>Mobile, Web, and Desktop</strong></div><div class="case-fact"><span>Focus</span><strong>Digital Healthcare</strong></div></div>
+        <div class="case-grid">
+            <section class="case-section"><h2>The problem</h2><p>Patients and community healthcare providers need accessible tools for monitoring vital signs, recognizing risks early, and maintaining trustworthy records across different points of care.</p></section>
+            <section class="case-section"><h2>The solution</h2><p>BioTrack combines patient monitoring, provider workflows, AI-assisted insights, alerts, and blockchain-backed integrity checks in connected Flutter, Next.js, and desktop experiences.</p></section>
+            <section class="case-section"><h2>My contribution</h2><ul><li>Designed and developed responsive patient and provider interface experiences.</li><li>Structured health information into understandable dashboards, records, and status views.</li><li>Worked with frontend-to-API integration across web and mobile flows.</li><li>Supported a consistent visual experience across the project platforms.</li></ul></section>
+            <section class="case-section"><h2>Core features</h2><ul><li>Patient vital-sign monitoring and health trends</li><li>Provider dashboards, records, and alerts</li><li>AI-assisted health insights and risk levels</li><li>Role-based patient, provider, and administrator access</li><li>Blockchain-backed record integrity verification</li><li>Mobile, web, and Electron desktop delivery</li></ul></section>
+            <section class="case-section case-section--wide"><h2>Project visuals</h2><p>BioTrack connects a secure web experience with mobile vital monitoring, AI-assisted insights, records, and a live camera-based scan flow.</p><div class="case-gallery case-gallery--three"><figure class="case-gallery__screen"><img src="assets/biotrackweb.png" alt="BioTrack web sign-in experience" /></figure><figure class="case-gallery__phone"><img src="assets/biotrackmobile2.png" alt="BioTrack live vital scan result" /></figure><figure class="case-gallery__screen"><img src="assets/biotrackmobile.png" alt="BioTrack mobile monitoring, scanning, AI insights, and records screens" /></figure></div></section>
+            <section class="case-section case-section--wide"><h2>Interface highlights</h2><p>These summaries represent BioTrack's implemented product areas. Full source access remains controlled because BioTrack is a team academic project.</p><div class="interface-grid"><article class="interface-preview"><div class="interface-preview__top"><i></i><i></i><i></i></div><h3>Patient monitoring</h3><p>Review vital readings, recent health information, and AI-assisted risk guidance.</p><div class="interface-bars"><i></i><i></i><i></i></div></article><article class="interface-preview"><div class="interface-preview__top"><i></i><i></i><i></i></div><h3>Provider workspace</h3><p>Monitor assigned patients, examine trends, and respond to priority alerts.</p><div class="interface-bars"><i></i><i></i><i></i></div></article><article class="interface-preview"><div class="interface-preview__top"><i></i><i></i><i></i></div><h3>Record verification</h3><p>Confirm record authenticity through stored hashes, timestamps, and integrity status.</p><div class="interface-bars"><i></i><i></i><i></i></div></article></div></section>
+            <section class="case-section"><h2>Challenge and response</h2><p>Healthcare information can become overwhelming quickly. I focused on clear hierarchy, consistent status language, and role-specific screens so each user sees the actions and information relevant to them.</p></section>
+            <section class="case-section"><h2>What I learned</h2><p>BioTrack expanded my experience with multi-platform design, frontend integration, complex role-based workflows, and presenting sensitive technical information in a clear, user-centered way.</p></section>
+        </div>
+        <div class="case-cta"><div><h2>Interested in the implementation?</h2><p>The complete repository is private because this is a team academic project. A guided demonstration and selected code samples can be provided during an interview.</p></div><a href="contact.html" class="project-link">Contact Me</a></div>
+    </main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

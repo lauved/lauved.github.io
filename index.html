@@ -110,15 +110,27 @@
 
                     <div class="skills-panel" id="home-skills">
                         <p class="section-label">Skills</p>
-                        <div class="pill-row">
-                            <span class="pill">UI/UX Design</span>
-                            <span class="pill">Frontend Development</span>
-                            <span class="pill">Responsive Layouts</span>
-                            <span class="pill">HTML / CSS / JavaScript</span>
-                            <span class="pill">Mobile UI Concepts</span>
-                            <span class="pill">Game Art</span>
-                            <span class="pill">Wireframing</span>
-                            <span class="pill">Visual Design</span>
+                        <div class="skill-evidence-grid">
+                            <article class="skill-evidence-card">
+                                <h3>Front-End Development</h3>
+                                <p>Responsive interfaces built with HTML, CSS, JavaScript, React, and Next.js.</p>
+                                <span>Evidence: BioTrack, LUNAS, and SneakHub</span>
+                            </article>
+                            <article class="skill-evidence-card">
+                                <h3>Mobile Development</h3>
+                                <p>Cross-platform mobile experiences using Flutter, Dart, navigation, and state management.</p>
+                                <span>Evidence: BioTrack, LUNAS, Baskit, and PetPal</span>
+                            </article>
+                            <article class="skill-evidence-card">
+                                <h3>UI/UX Design</h3>
+                                <p>User flows, wireframes, prototypes, and accessible, responsive interface decisions.</p>
+                                <span>Evidence: LUNAS reporting flow and portfolio projects</span>
+                            </article>
+                            <article class="skill-evidence-card">
+                                <h3>Development Workflow</h3>
+                                <p>Git, GitHub, REST API integration, project documentation, and collaborative delivery.</p>
+                                <span>Evidence: BioTrack and LUNAS team repositories</span>
+                            </article>
                         </div>
                     </div>
 
@@ -165,21 +177,24 @@
                 <article class="home-project-card home-project-card--ai" data-home-preview="all">
                     <div class="home-project-card__media">
                         <span class="home-project-card__category">Featured</span>
-                        <div class="home-project-card__art gradient-art gradient-art--dermascan" aria-hidden="true"></div>
-                        <p class="home-project-card__semester">3rd Year - 1st Semester</p>
+                        <div class="home-project-card__art home-project-photo"><img src="assets/clarifaiweb.png" alt="ClarifAI analytics dashboard" /></div>
                     </div>
                     <div class="home-project-card__content">
-                        <p class="home-project-card__eyebrow">3RD YEAR - 1ST SEMESTER</p>
-                        <h3>DermaScan</h3>
-                        <p class="home-project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
+                        <p class="home-project-card__client">Client project for Kyro Core I.T. Solutions</p>
+                        <h3>ClarifAI</h3>
+                        <p class="home-project-card__role"><strong>Role:</strong> FRONTEND DEVELOPER / UI/UX DESIGNER</p>
                         <p class="home-project-card__description">
-                            An AI-assisted skin analysis concept focused on making early skin condition detection more accessible through
-                            image-based interaction.
+                            An AI-powered data insights and decision-support platform that turns uploaded datasets into natural-language
+                            answers, visualizations, forecasts, and actionable recommendations.
                         </p>
                         <div class="home-project-card__tags">
+                            <span>Client-Based</span>
                             <span>AI</span>
-                            <span>Mobile</span>
-                            <span>Healthcare</span>
+                            <span>Web</span>
+                            <span>Analytics</span>
+                        </div>
+                        <div class="project-card__actions">
+                            <a href="clarifai.html" class="project-link">View Case Study</a>
                         </div>
                     </div>
                 </article>
@@ -187,21 +202,22 @@
                 <article class="home-project-card home-project-card--web" data-home-preview="web" hidden>
                     <div class="home-project-card__media">
                         <span class="home-project-card__category">Web</span>
-                        <div class="home-project-card__art gradient-art gradient-art--sneakhub" aria-hidden="true"></div>
-                        <p class="home-project-card__semester">1st Year - 2nd Semester</p>
+                        <div class="home-project-card__art gradient-art gradient-art--lunas" aria-hidden="true"></div>
                     </div>
                     <div class="home-project-card__content">
-                        <p class="home-project-card__eyebrow">1ST YEAR - 2ND SEMESTER</p>
-                        <h3>SneakHub</h3>
-                        <p class="home-project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
+                        <h3>LUNAS</h3>
+                        <p class="home-project-card__role"><strong>Role:</strong> SYSTEM ANALYST / UI/UX DESIGNER</p>
                         <p class="home-project-card__description">
-                            An online shoe catalog interface built to make browsing men's, women's, and children's footwear clean and
-                            easy to navigate.
+                            A connected mobile and web command system for reporting, assigning, tracking, and verifying urban
+                            infrastructure repairs.
                         </p>
                         <div class="home-project-card__tags">
                             <span>Web</span>
-                            <span>Catalog</span>
-                            <span>UI/UX</span>
+                            <span>Next.js</span>
+                            <span>AI</span>
+                        </div>
+                        <div class="project-card__actions">
+                            <a href="lunas.html" class="project-link">View Case Study</a>
                         </div>
                     </div>
                 </article>
@@ -209,11 +225,9 @@
                 <article class="home-project-card home-project-card--games" data-home-preview="games" hidden>
                     <div class="home-project-card__media">
                         <span class="home-project-card__category">Games</span>
-                        <div class="home-project-card__art gradient-art gradient-art--echoes" aria-hidden="true"></div>
-                        <p class="home-project-card__semester">3rd Year - 2nd Semester</p>
+                        <div class="home-project-card__art home-project-photo"><img src="assets/echoesfront.png" alt="Echoes of the Lighthouse title screen" /></div>
                     </div>
                     <div class="home-project-card__content">
-                        <p class="home-project-card__eyebrow">3RD YEAR - 2ND SEMESTER</p>
                         <h3>Echoes of the Lighthouse</h3>
                         <p class="home-project-card__role"><strong>Role:</strong> GAME ARTIST</p>
                         <p class="home-project-card__description">
@@ -225,27 +239,31 @@
                             <span>3D</span>
                             <span>Puzzle</span>
                         </div>
+                        <div class="project-card__actions">
+                            <a href="echoes.html" class="project-link">View Case Study</a>
+                        </div>
                     </div>
                 </article>
 
                 <article class="home-project-card home-project-card--mobile" data-home-preview="mobile" hidden>
                     <div class="home-project-card__media">
                         <span class="home-project-card__category">Mobile</span>
-                        <div class="home-project-card__art gradient-art gradient-art--baskit" aria-hidden="true"></div>
-                        <p class="home-project-card__semester">2nd Year - 2nd Semester</p>
+                        <div class="home-project-card__art home-project-photo"><img src="assets/biotrackweb.png" alt="BioTrack secure web experience" /></div>
                     </div>
                     <div class="home-project-card__content">
-                        <p class="home-project-card__eyebrow">2ND YEAR - 2ND SEMESTER</p>
-                        <h3>Baskit</h3>
+                        <h3>BioTrack</h3>
                         <p class="home-project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
                         <p class="home-project-card__description">
-                            A grocery-list and pickup experience designed to save time for busy users while keeping local market shopping
-                            organized and convenient.
+                            A cross-platform healthcare system for vital monitoring, provider workflows, AI-assisted insights, and
+                            blockchain-backed record verification.
                         </p>
                         <div class="home-project-card__tags">
                             <span>Mobile</span>
-                            <span>Marketplace</span>
-                            <span>UI Flow</span>
+                            <span>Flutter</span>
+                            <span>Healthcare</span>
+                        </div>
+                        <div class="project-card__actions">
+                            <a href="biotrack.html" class="project-link">View Case Study</a>
                         </div>
                     </div>
                 </article>
@@ -253,21 +271,22 @@
                 <article class="home-project-card home-project-card--ai" data-home-preview="ai" hidden>
                     <div class="home-project-card__media">
                         <span class="home-project-card__category">AI</span>
-                        <div class="home-project-card__art gradient-art gradient-art--dermascan" aria-hidden="true"></div>
-                        <p class="home-project-card__semester">3rd Year - 1st Semester</p>
+                        <div class="home-project-card__art gradient-art gradient-art--lunas" aria-hidden="true"></div>
                     </div>
                     <div class="home-project-card__content">
-                        <p class="home-project-card__eyebrow">3RD YEAR - 1ST SEMESTER</p>
-                        <h3>DermaScan</h3>
-                        <p class="home-project-card__role"><strong>Role:</strong> UI/UX DESIGN / FRONTEND DEVELOPER</p>
+                        <h3>LUNAS</h3>
+                        <p class="home-project-card__role"><strong>Role:</strong> SYSTEM ANALYST / UI/UX DESIGNER</p>
                         <p class="home-project-card__description">
-                            A skin-condition analysis concept that uses AI-assisted image interpretation to help users notice potential
-                            concerns earlier.
+                            AI-assisted incident reporting, privacy-aware image processing, repair verification, and automated SLA
+                            monitoring for local infrastructure maintenance.
                         </p>
                         <div class="home-project-card__tags">
                             <span>AI</span>
                             <span>Mobile</span>
-                            <span>Healthcare</span>
+                            <span>Civic Tech</span>
+                        </div>
+                        <div class="project-card__actions">
+                            <a href="lunas.html" class="project-link">View Case Study</a>
                         </div>
                     </div>
                 </article>

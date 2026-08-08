@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClarifAI Case Study - Terrence Lappay</title>
+    <script>(() => { const saved = localStorage.getItem("portfolio-theme"); const preferred = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; document.documentElement.setAttribute("data-theme", saved || preferred); })();</script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="case-study.css" />
+</head>
+<body class="site-page">
+<canvas class="site-dot-grid" id="interactiveDotGrid" aria-hidden="true"></canvas>
+<div class="site-content">
+    <nav class="nav">
+        <a href="index.html" class="logo" aria-label="Go to the homepage">L</a>
+        <div class="nav__group"><ul class="nav__links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="works.html" aria-current="page">Works</a></li><li><a href="contact.html">Contact</a></li></ul><div class="nav__actions"><a href="assets/resume.pdf" class="nav-resume" target="_blank" rel="noopener">Resume</a><button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span class="theme-toggle__icon" aria-hidden="true">&#9789;</span><span class="theme-toggle__text">Dark</span></button></div></div>
+    </nav>
+    <main class="case-page">
+        <a class="case-back" href="works.html">&larr; Back to all works</a>
+        <section class="case-hero">
+            <div class="case-hero__copy">
+                <p class="section-label">Featured Client-Based Project</p>
+                <h1>ClarifAI</h1>
+                <p class="case-hero__lead">An AI-powered data insights and decision-support platform designed to transform raw datasets into understandable answers, visualizations, forecasts, and actionable recommendations.</p>
+                <div class="case-tags"><span>Web Application</span><span>AI/ML</span><span>Data Analytics</span><span>UI/UX</span><span>Cybersecurity</span></div>
+            </div>
+            <div class="case-hero__visual"><img src="assets/clarifaifront.png" alt="ClarifAI landing page introducing AI-powered data insights" style="width:100%;object-fit:cover;object-position:center;border-radius:20px" /></div>
+        </section>
+
+        <div class="case-facts">
+            <div class="case-fact"><span>Client</span><strong>Kyro Core I.T. Solutions</strong></div>
+            <div class="case-fact"><span>Role</span><strong>Front-End Developer &amp; UI/UX Designer</strong></div>
+            <div class="case-fact"><span>Platform</span><strong>Web Application</strong></div>
+            <div class="case-fact"><span>Focus</span><strong>Data-Driven Decision Support</strong></div>
+        </div>
+
+        <div class="case-grid">
+            <section class="case-section">
+                <h2>Client context</h2>
+                <p>Kyro Core I.T. Solutions is a technology and security service provider in Dagupan City offering CCTV services, web development and maintenance, SEO, and graphic design and printing. Its work involves sensitive client information, recordings, and web applications.</p>
+            </section>
+            <section class="case-section">
+                <h2>The opportunity</h2>
+                <p>Organizations often collect useful datasets but lack accessible tools for interpreting them. ClarifAI reduces the technical barrier by allowing users to explore data through natural language and automatically generated visual explanations.</p>
+            </section>
+            <section class="case-section">
+                <h2>My contribution</h2>
+                <ul><li>Designed the information architecture and core user journeys.</li><li>Created interfaces for dataset upload, AI conversations, dashboards, reports, and collaboration.</li><li>Developed responsive front-end components and interaction states.</li><li>Translated complex analytical outputs into clear, approachable visual patterns.</li><li>Considered security and data-protection requirements throughout the experience.</li></ul>
+            </section>
+            <section class="case-section">
+                <h2>Core capabilities</h2>
+                <ul><li>Upload and process structured datasets</li><li>Ask dataset questions using natural language</li><li>Generate charts, graphs, heatmaps, and dashboards</li><li>Produce predictive forecasts and trend analysis</li><li>Receive AI-generated recommendations</li><li>Share dashboards, reports, and annotations</li></ul>
+            </section>
+            <section class="case-section case-section--wide">
+                <h2>Project visuals</h2>
+                <p>The landing experience introduces ClarifAI's value clearly, while the analytics dashboard prioritizes datasets, trends, AI insights, alerts, and reports.</p>
+                <div class="case-gallery"><figure><img src="assets/clarifaifront.png" alt="ClarifAI landing page" /></figure><figure class="case-gallery__screen"><img src="assets/clarifaiweb.png" alt="ClarifAI analytics dashboard" /></figure></div>
+            </section>
+            <section class="case-section case-section--wide">
+                <h2>Experience architecture</h2>
+                <p>The interface organizes the analytical workflow into three understandable stages: bring data into the platform, explore it through AI and visualizations, then share the resulting evidence with decision-makers.</p>
+                <div class="interface-grid">
+                    <article class="interface-preview"><div class="interface-preview__top"><i></i><i></i><i></i></div><h3>1. Prepare data</h3><p>Upload datasets, review processing status, and confirm that information is ready for analysis.</p><div class="interface-bars"><i></i><i></i><i></i></div></article>
+                    <article class="interface-preview"><div class="interface-preview__top"><i></i><i></i><i></i></div><h3>2. Discover insights</h3><p>Ask questions naturally, inspect automated visualizations, and examine trends and forecasts.</p><div class="interface-bars"><i></i><i></i><i></i></div></article>
+                    <article class="interface-preview"><div class="interface-preview__top"><i></i><i></i><i></i></div><h3>3. Decide together</h3><p>Share dashboards, AI reports, recommendations, and annotations with collaborators.</p><div class="interface-bars"><i></i><i></i><i></i></div></article>
+                </div>
+            </section>
+            <section class="case-section">
+                <h2>Information assurance</h2>
+                <p>Because the client handles sensitive operational and customer information, the project also considers access control, secure data handling, backups, recovery, risk reduction, and responsible management of AI-generated output.</p>
+            </section>
+            <section class="case-section">
+                <h2>Expected client value</h2>
+                <p>ClarifAI is designed to shorten the path from raw information to confident action, make analytics accessible to non-technical users, strengthen collaboration, and support more consistent evidence-based decisions.</p>
+            </section>
+            <section class="case-section">
+                <h2>Challenge and response</h2>
+                <p>The platform combines technically complex features without overwhelming users. I used progressive disclosure, familiar dashboard patterns, and plain-language interaction to keep advanced analytics understandable.</p>
+            </section>
+            <section class="case-section">
+                <h2>What I learned</h2>
+                <p>This project strengthened my experience working from a real organization’s context, designing data-heavy interfaces, communicating AI capabilities responsibly, and balancing usability with information-assurance requirements.</p>
+            </section>
+        </div>
+
+        <div class="case-cta"><div><h2>Interested in ClarifAI?</h2><p>I can walk through the client requirements, user flows, interface decisions, and front-end contribution during an interview.</p></div><a href="contact.html" class="project-link">Contact Me</a></div>
+    </main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

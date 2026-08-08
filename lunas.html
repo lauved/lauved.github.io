@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LUNAS Case Study - Terrence Lappay</title>
+    <script>(() => { const saved = localStorage.getItem("portfolio-theme"); const preferred = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; document.documentElement.setAttribute("data-theme", saved || preferred); })();</script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="case-study.css" />
+</head>
+<body class="site-page">
+<canvas class="site-dot-grid" id="interactiveDotGrid" aria-hidden="true"></canvas>
+<div class="site-content">
+    <nav class="nav">
+        <a href="index.html" class="logo" aria-label="Go to the homepage">L</a>
+        <div class="nav__group"><ul class="nav__links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="works.html" aria-current="page">Works</a></li><li><a href="contact.html">Contact</a></li></ul><div class="nav__actions"><a href="assets/resume.pdf" class="nav-resume" target="_blank" rel="noopener">Resume</a><button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span class="theme-toggle__icon" aria-hidden="true">&#9789;</span><span class="theme-toggle__text">Dark</span></button></div></div>
+    </nav>
+    <main class="case-page">
+        <a class="case-back" href="works.html">&larr; Back to all works</a>
+        <section class="case-hero">
+            <div class="case-hero__copy"><p class="section-label">Project Case Study</p><h1>LUNAS</h1><p class="case-hero__lead">An AI-assisted urban infrastructure maintenance and monitoring system designed to make incident reporting, assignment, repair, and verification faster and more accountable in Dagupan City.</p><div class="case-tags"><span>Flutter</span><span>Next.js</span><span>FastAPI</span><span>PostgreSQL</span><span>Google Maps</span><span>AI</span></div></div>
+            <div class="case-hero__visual"><div class="gradient-art gradient-art--lunas" aria-hidden="true"></div></div>
+        </section>
+        <div class="case-facts"><div class="case-fact"><span>Role</span><strong>System Analyst &amp; UI/UX Designer</strong></div><div class="case-fact"><span>Platform</span><strong>Mobile and Web</strong></div><div class="case-fact"><span>Context</span><strong>Academic Capstone</strong></div></div>
+        <div class="case-grid">
+            <section class="case-section"><h2>The problem</h2><p>Urban hazards such as potholes, damaged roads, leaks, and drainage issues can suffer from delayed reporting, fragmented coordination, and limited visibility after submission.</p></section>
+            <section class="case-section"><h2>The solution</h2><p>LUNAS connects citizens, repair personnel, and government officials in one Report → Validation → Assignment → Repair → Verification → Closure workflow.</p></section>
+            <section class="case-section"><h2>My contribution</h2><ul><li>Analyzed user roles and translated operational requirements into interface flows.</li><li>Designed and implemented static Flutter screens with connected navigation.</li><li>Implemented Google Maps location selection in the report-creation flow.</li><li>Contributed the UI/UX direction for citizen and operational experiences.</li></ul></section>
+            <section class="case-section"><h2>Core features</h2><ul><li>Photo and GPS-assisted incident reporting</li><li>AI hazard analysis and privacy masking</li><li>Role-based work orders and status tracking</li><li>Automated SLA monitoring and escalation</li><li>Before-and-after repair verification</li><li>Audit logs and secure records</li></ul></section>
+            <section class="case-section case-section--wide"><h2>Interface highlights</h2><p>These summaries represent the implemented product flows. Full source access remains controlled because LUNAS is a team academic project.</p><div class="interface-grid"><article class="interface-preview"><div class="interface-preview__top"><i></i><i></i><i></i></div><h3>Citizen reporting</h3><p>Capture evidence, confirm the incident category, and select an exact map location.</p><div class="interface-bars"><i></i><i></i><i></i></div></article><article class="interface-preview"><div class="interface-preview__top"><i></i><i></i><i></i></div><h3>Work order tracking</h3><p>Assigned teams receive incident details, update repair progress, and submit evidence.</p><div class="interface-bars"><i></i><i></i><i></i></div></article><article class="interface-preview"><div class="interface-preview__top"><i></i><i></i><i></i></div><h3>Command center</h3><p>Officials validate reports, monitor SLA deadlines, and review completed repairs.</p><div class="interface-bars"><i></i><i></i><i></i></div></article></div></section>
+            <section class="case-section"><h2>Challenge and response</h2><p>A report must contain useful location data without making the flow difficult for citizens. I integrated a reusable map picker into report creation so users can confirm a location visually while retaining coordinate and address fallbacks.</p></section>
+            <section class="case-section"><h2>What I learned</h2><p>LUNAS strengthened my experience in systems analysis, role-based design, Flutter navigation, location services, and translating complex government workflows into understandable interfaces.</p></section>
+        </div>
+        <div class="case-cta"><div><h2>Interested in the implementation?</h2><p>The complete repository is private because this is a team capstone. A guided demonstration and selected code samples can be provided during an interview.</p></div><a href="contact.html" class="project-link">Contact Me</a></div>
+    </main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
