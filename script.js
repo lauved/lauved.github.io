@@ -186,10 +186,14 @@
 
         const updateActiveLink = () => {
             const navOffset = nav instanceof HTMLElement ? nav.offsetHeight + 28 : 120;
+            // Anchor targets stop below the sticky navigation because the sections
+            // use scroll-margin-top. Include that breathing room in the activation
+            // line so the clicked section, rather than the previous one, is active.
+            const activationLine = navOffset + 48;
             let activeId = sections[0].id;
 
             sections.forEach(({ id, section }) => {
-                if (section.getBoundingClientRect().top - navOffset <= 0) {
+                if (section.getBoundingClientRect().top <= activationLine) {
                     activeId = id;
                 }
             });
@@ -1135,6 +1139,5 @@
     initHomeProjectPreview();
     initContactForms();
     initInteractiveDotGrid();
-    initRunnerGame();
     initFooterUtilities();
 })();
