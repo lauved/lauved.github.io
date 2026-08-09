@@ -19,6 +19,13 @@
     const runnerActionButton = document.querySelector("[data-runner-action]");
     const runnerJumpButton = document.querySelector("[data-runner-jump]");
 
+    document.querySelectorAll('a[href="works.html"]').forEach((link) => {
+        if (link.textContent.trim() === "Works") link.textContent = "Projects";
+    });
+    document.querySelectorAll(".case-back").forEach((link) => {
+        if (link.textContent.toLowerCase().includes("all works")) link.innerHTML = "&larr; Back to all projects";
+    });
+
     const initThemeToggle = () => {
         if (!themeToggle) {
             return;

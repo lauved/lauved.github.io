@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Works - Terrence Lappay</title>
+    <title>Projects - Terrence Lappay</title>
     <link rel="canonical" href="https://lappayportfolio.vercel.app/works.html" />
     <script>
         (() => {
@@ -25,8 +25,8 @@
             <ul class="nav__links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="works.html" aria-current="page">Works</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="works.html" aria-current="page">Projects</a></li>
+                <li><a href="index.html#home-contact">Contact</a></li>
             </ul>
 
             <div class="nav__actions">
@@ -43,10 +43,10 @@
         <section class="works-page">
             <div class="works-intro">
                 <p class="section-label">Projects</p>
-                <h1>Selected Works</h1>
+                <h1>Selected Projects</h1>
                 <p>
-                    Browse the projects I have built across web, mobile, games, and AI. Use the filters to focus on a category, or keep
-                    <strong>All</strong> selected to view everything together.
+                    Five focused projects showing client work, cross-platform systems, AI-assisted products, and creative development.
+                    Each case study explains the problem, my contribution, key decisions, and delivered interface work.
                 </p>
             </div>
 
@@ -89,7 +89,7 @@
                     </div>
                 </article>
 
-                <article class="project-card project-card--web" data-categories="web">
+                <article class="project-card project-card--web project-card--additional" data-categories="web">
                     <div class="project-card__media">
                         <span class="project-card__category">Web</span>
                         <div class="project-card__art project-media-showcase project-media-showcase--sneakhub">
@@ -128,7 +128,7 @@
                     </div>
                 </article>
 
-                <article class="project-card project-card--games" data-categories="mobile games">
+                <article class="project-card project-card--games project-card--additional" data-categories="mobile games">
                     <div class="project-card__media">
                         <span class="project-card__category">Mobile / Games</span>
                         <div class="project-card__art project-duo-showcase project-duo-showcase--petpal">
@@ -156,7 +156,7 @@
                     </div>
                 </article>
 
-                <article class="project-card project-card--mobile" data-categories="mobile web">
+                <article class="project-card project-card--mobile project-card--additional" data-categories="mobile web">
                     <div class="project-card__media">
                         <span class="project-card__category">Mobile / Web</span>
                         <div class="project-card__art project-duo-showcase project-duo-showcase--baskit">
@@ -188,7 +188,10 @@
                 <article class="project-card project-card--ai" data-categories="mobile ai">
                     <div class="project-card__media">
                         <span class="project-card__category">Mobile / AI</span>
-                        <div class="project-card__art gradient-art gradient-art--dermascan" aria-hidden="true"></div>
+                        <div class="project-card__art project-duo-showcase project-duo-showcase--dermascan">
+                            <img class="project-duo-showcase__main project-duo-showcase__main--dermascan" src="assets/derma1.png" alt="Derma AI smart skin condition detector logo" />
+                            <img class="project-duo-showcase__accent project-duo-showcase__accent--phone project-duo-showcase__accent--dermascan" src="assets/derma3-front.png" alt="DermaScan skin analyzer screen" />
+                        </div>
                     </div>
                     <div class="project-card__content">
                         <h2>DermaScan</h2>
@@ -290,6 +293,15 @@
                     </div>
                 </article>
             </div>
+
+            <section class="additional-projects" aria-labelledby="additional-projects-title">
+                <div><p class="section-label">More Work</p><h2 id="additional-projects-title">Additional projects</h2></div>
+                <div class="additional-projects__links">
+                    <a href="sneakhub.html"><strong>SneakHub</strong><span>Responsive footwear catalog</span></a>
+                    <a href="petpal.html"><strong>PetPal</strong><span>Mobile pixel-art care game</span></a>
+                    <a href="baskit.html"><strong>Baskit</strong><span>Mobile and web marketplace</span></a>
+                </div>
+            </section>
         </section>
     </main>
 </div>

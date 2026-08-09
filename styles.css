@@ -483,6 +483,29 @@ body {
     max-width: 680px;
 }
 
+.hero-availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: fit-content;
+    margin-bottom: 20px !important;
+    padding: 8px 13px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    font-size: 13px !important;
+    font-weight: 750;
+    line-height: 1.2 !important;
+}
+
+.hero-availability span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2da66f;
+    box-shadow: 0 0 0 4px rgba(45, 166, 111, 0.14);
+}
+
 .hero-text h1 {
     margin-bottom: 24px;
     font-size: 86px;
@@ -504,6 +527,12 @@ body {
     flex-wrap: wrap;
     gap: 14px;
     margin-bottom: 40px;
+}
+
+.hero-actions .cta--secondary {
+    background: var(--surface);
+    border-color: var(--border);
+    color: var(--text);
 }
 
 .hero--home .hero-actions,
@@ -1697,6 +1726,18 @@ body {
     border-color: #131313;
     color: #131313;
     transform: translateY(-1px);
+}
+
+.hero-actions .cta.cta--secondary {
+    background: var(--surface);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.hero-actions .cta.cta--secondary:hover {
+    background: var(--inverse-bg);
+    border-color: var(--inverse-bg);
+    color: var(--inverse-text);
 }
 
 /* =======================

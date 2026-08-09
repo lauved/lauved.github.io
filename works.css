@@ -72,6 +72,38 @@
     gap: 24px;
 }
 
+.project-card--additional { display: none !important; }
+
+.additional-projects {
+    display: grid;
+    grid-template-columns: minmax(190px, 0.35fr) minmax(0, 1fr);
+    gap: 28px;
+    margin-top: 30px;
+    padding: 30px;
+    border: 1px solid var(--border);
+    border-radius: 26px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.additional-projects h2 { margin-top: 7px; font-size: 27px; }
+.additional-projects__links { display: grid; gap: 10px; }
+
+.additional-projects__links a {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 15px 17px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    color: var(--text);
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.additional-projects__links a:hover { transform: translateY(-2px); border-color: var(--text); }
+.additional-projects__links span { color: var(--muted); text-align: right; }
+
 .project-card {
     display: grid;
     grid-template-columns: minmax(280px, 360px) 1fr;
@@ -322,6 +354,18 @@
     object-position: 56% center;
 }
 
+.project-duo-showcase__main--dermascan {
+    background: #ffffff;
+    object-fit: contain;
+}
+
+.project-duo-showcase__accent--dermascan {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.42));
+}
+
 .project-duo-showcase:hover .project-duo-showcase__main {
     box-shadow: 0 30px 58px rgba(0, 0, 0, 0.48);
     transform: perspective(900px) rotateY(-1deg) translateY(-3px) scale(1.015);
@@ -340,6 +384,7 @@
     .project-duo-showcase__accent {
         transition: none;
     }
+
 }
 
 .project-card__semester {
@@ -425,6 +470,10 @@
     .works-intro p {
         font-size: 16px;
     }
+
+    .additional-projects { grid-template-columns: 1fr; padding: 24px 20px; }
+    .additional-projects__links a { flex-direction: column; gap: 4px; }
+    .additional-projects__links span { text-align: left; }
 
     .project-card__media {
         min-height: 240px;

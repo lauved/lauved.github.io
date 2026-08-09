@@ -95,6 +95,36 @@
     margin: 24px 0 56px;
 }
 
+.case-evidence {
+    margin-bottom: 22px;
+}
+
+.case-evidence__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.case-evidence__item {
+    padding: 18px;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background: var(--surface-strong);
+}
+
+.case-evidence__item span {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.case-evidence__item strong { line-height: 1.45; }
+
 .case-fact {
     padding: 22px;
     border-radius: 20px;
@@ -261,6 +291,22 @@
     image-rendering: pixelated;
 }
 
+.case-gallery--dermascan {
+    grid-template-columns: minmax(180px, 0.72fr) repeat(2, minmax(210px, 1fr));
+    align-items: stretch;
+}
+
+.case-gallery--dermascan figure {
+    min-height: 590px;
+}
+
+.case-gallery--dermascan .case-gallery__phone img {
+    width: auto;
+    height: 540px;
+    max-width: 100%;
+    max-height: 540px;
+}
+
 .case-cta {
     display: flex;
     flex-wrap: wrap;
@@ -283,8 +329,11 @@
     .case-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .case-section--wide { grid-column: auto; }
     .interface-grid { grid-template-columns: 1fr; }
+    .case-evidence__grid { grid-template-columns: 1fr; }
     .case-gallery { grid-template-columns: 1fr; }
     .case-gallery--three figure:nth-child(3) { grid-column: auto; }
+    .case-gallery--dermascan { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .case-gallery--dermascan figure:first-child { grid-column: 1 / -1; min-height: 360px; }
 }
 
 @media (max-width: 600px) {
@@ -293,4 +342,8 @@
     .case-hero__visual { min-height: 0; padding: 12px; }
     .case-facts { grid-template-columns: 1fr; }
     .case-section { padding: 26px 22px; }
+    .case-gallery--dermascan { grid-template-columns: 1fr; }
+    .case-gallery--dermascan figure:first-child { grid-column: auto; }
+    .case-gallery--dermascan figure { min-height: 0; }
+    .case-gallery--dermascan .case-gallery__phone img { height: auto; max-height: 560px; }
 }
