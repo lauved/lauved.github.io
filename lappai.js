@@ -1,7 +1,22 @@
 (() => {
     const STORAGE_KEY = "lappaiConversation";
     const greeting = "Hello! I'm LAPPAI, Terrence's personal portfolio assistant. Ask me anything about his skills, projects, tech stack, experience, or design work.";
-    const suggestions = ["View Terrence's Projects", "What are his skills?", "Tell me about DermaScan", "Why hire Terrence?"];
+    const suggestions = [
+        "View Terrence's Projects",
+        "What are his skills?",
+        "What is his tech stack?",
+        "What are his strongest frontend skills?",
+        "What are his UI/UX skills?",
+        "Tell me about DermaScan",
+        "Tell me about BioTrack",
+        "Tell me about LUNAS",
+        "Tell me about ClarifAI",
+        "What AI was used in DermaScan?",
+        "What is Terrence studying?",
+        "Why hire Terrence?",
+        "View Terrence's resume",
+        "How can I contact Terrence?"
+    ];
 
     const shell = document.createElement("div");
     shell.className = "lappai";
@@ -79,15 +94,13 @@
         conversation.replaceChildren();
         history.forEach(appendMessage);
         suggestionsElement.replaceChildren();
-        if (history.length === 1) {
-            suggestions.forEach(text => {
-                const button = document.createElement("button");
-                button.type = "button";
-                button.textContent = text;
-                button.addEventListener("click", () => send(text));
-                suggestionsElement.appendChild(button);
-            });
-        }
+        suggestions.forEach(text => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.textContent = text;
+            button.addEventListener("click", () => send(text));
+            suggestionsElement.appendChild(button);
+        });
         scrollToLatest();
     };
     const setOpen = (open) => {
@@ -120,7 +133,6 @@
         const userMessage = { role: "user", content: value };
         history.push(userMessage);
         saveHistory();
-        suggestionsElement.replaceChildren();
         appendMessage(userMessage);
         input.value = "";
         setSending(true);
