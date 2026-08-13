@@ -37,7 +37,7 @@ export default async function handler(request, response) {
     try {
         const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
         const result = await client.responses.create({
-            model: process.env.OPENAI_MODEL || "gpt-5.6-luna",
+            model: process.env.OPENAI_MODEL || "gpt-5.4-mini",
             instructions,
             input: messages,
             max_output_tokens: 350
@@ -46,7 +46,12 @@ export default async function handler(request, response) {
         if (!answer) throw new Error("Empty model response");
         return response.status(200).json({ answer });
     } catch (error) {
-        console.error("LAPPAI request failed", error instanceof Error ? error.message : "Unknown error");
+        console.error("LAPPAI request failed", {
+            status: Number.isInteger(error?.status) ? error.status : undefined,
+            code: typeof error?.code === "string" ? error.code : undefined,
+            type: typeof error?.type === "string" ? error.type : undefined,
+            message: error instanceof Error ? error.message : "Unknown error"
+        });
         return response.status(500).json({ error: "LAPPAI could not respond" });
     }
 }
