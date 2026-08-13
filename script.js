@@ -1,7 +1,5 @@
 (() => {
-    const storageKey = "portfolio-theme";
     const root = document.documentElement;
-    const themeToggle = document.getElementById("themeToggle");
     const filterButtons = document.querySelectorAll(".filter-chip");
     const projectCards = document.querySelectorAll(".project-card");
     const homeFilterButtons = document.querySelectorAll(".home-filter-chip");
@@ -26,38 +24,71 @@
         if (link.textContent.toLowerCase().includes("all works")) link.innerHTML = "&larr; Back to all projects";
     });
 
-    const initThemeToggle = () => {
-        if (!themeToggle) {
-            return;
+    const initAppearanceCustomizer = () => {
+        const actions = document.querySelector(".nav__actions");
+        if (!actions) return;
+
+        const oldToggle = document.getElementById("themeToggle");
+        let toggle = document.getElementById("appearanceToggle");
+        if (!toggle && oldToggle) {
+            toggle = oldToggle;
+            toggle.id = "appearanceToggle";
+            toggle.classList.add("appearance-toggle");
+            toggle.setAttribute("aria-label", "Customize appearance");
+            toggle.innerHTML = '<span class="theme-toggle__icon" aria-hidden="true">&#127912;</span><span class="theme-toggle__text">Appearance</span>';
         }
+        if (!toggle) return;
 
-        const icon = themeToggle.querySelector(".theme-toggle__icon");
-        const label = themeToggle.querySelector(".theme-toggle__text");
+        const styles = [
+            ["editorial", "Editorial", "Clean editorial default", "✣"],
+            ["art", "Art", "Expressive serif & curves", "◉"],
+            ["modern", "Modern", "Bold, sharp, geometric", "◇"]
+        ];
+        const colors = [
+            ["monochrome", "Monochrome"], ["blue", "Blue"], ["green", "Green"],
+            ["red", "Red"], ["gold", "Gold / Orange"], ["pink", "Pink"], ["purple", "Purple"]
+        ];
+        const panel = document.createElement("div");
+        panel.className = "appearance-panel";
+        panel.id = "appearancePanel";
+        panel.hidden = true;
+        panel.innerHTML = `
+            <div class="appearance-panel__heading"><span>Appearance</span><div class="appearance-modes" role="group" aria-label="Appearance"><button type="button" data-set-theme="light" aria-label="Light mode">☀</button><button type="button" data-set-theme="dark" aria-label="Dark mode">☾</button></div></div>
+            <fieldset><legend>Style</legend><div class="style-options">${styles.map(([value, name, subtitle, icon]) => `<button type="button" data-set-style="${value}"><span aria-hidden="true">${icon}</span><span><strong>${name}</strong><small>${subtitle}</small></span></button>`).join("")}</div></fieldset>
+            <fieldset><legend>Color</legend><div class="color-options">${colors.map(([value, name]) => `<button type="button" data-set-color="${value}" aria-label="${name}" title="${name}"><span></span></button>`).join("")}</div></fieldset>`;
+        actions.appendChild(panel);
+        toggle.setAttribute("aria-controls", panel.id);
 
-        const applyTheme = (theme) => {
-            const isDark = theme === "dark";
-
-            root.setAttribute("data-theme", theme);
-            localStorage.setItem(storageKey, theme);
-            themeToggle.setAttribute("aria-pressed", String(isDark));
-            themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
-
-            if (icon) {
-                icon.innerHTML = isDark ? "&#9728;" : "&#9789;";
-            }
-
-            if (label) {
-                label.textContent = isDark ? "Light" : "Dark";
-            }
+        const save = (key, value) => { try { localStorage.setItem(key, value); } catch (_) {} };
+        const updateHeroCopy = () => {
+            const heading = document.querySelector(".hero--home .hero-text h1");
+            if (!heading) return;
+            heading.innerHTML = "UI/UX Designer<br>&amp; Front-End Developer.";
         };
-
-        const currentTheme = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
-        applyTheme(currentTheme);
-
-        themeToggle.addEventListener("click", () => {
-            const nextTheme = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-            applyTheme(nextTheme);
+        const sync = () => {
+            panel.querySelectorAll("[data-set-theme]").forEach(el => el.classList.toggle("is-selected", el.dataset.setTheme === root.dataset.theme));
+            panel.querySelectorAll("[data-set-style]").forEach(el => el.classList.toggle("is-selected", el.dataset.setStyle === root.dataset.style));
+            panel.querySelectorAll("[data-set-color]").forEach(el => el.classList.toggle("is-selected", el.dataset.setColor === root.dataset.color));
+            updateHeroCopy();
+        };
+        const setPanel = (open) => {
+            panel.hidden = !open;
+            toggle.setAttribute("aria-expanded", String(open));
+            if (open) sync();
+        };
+        toggle.addEventListener("click", event => { event.stopPropagation(); setPanel(panel.hidden); });
+        panel.addEventListener("click", event => {
+            event.stopPropagation();
+            const control = event.target.closest("button");
+            if (!control) return;
+            if (control.dataset.setTheme) { root.dataset.theme = control.dataset.setTheme; save("portfolioAppearance", control.dataset.setTheme); save("portfolio-theme", control.dataset.setTheme); }
+            if (control.dataset.setStyle) { root.dataset.style = control.dataset.setStyle; save("portfolioStyle", control.dataset.setStyle); }
+            if (control.dataset.setColor) { root.dataset.color = control.dataset.setColor; save("portfolioColor", control.dataset.setColor); }
+            sync();
         });
+        document.addEventListener("click", () => setPanel(false));
+        document.addEventListener("keydown", event => { if (event.key === "Escape") { setPanel(false); toggle.focus(); } });
+        sync();
     };
 
     const initProjectFilters = () => {
@@ -1132,7 +1163,7 @@
         });
     };
 
-    initThemeToggle();
+    initAppearanceCustomizer();
     initNavScrollSpy();
     initTextRevealHeadings();
     initProjectFilters();
@@ -1140,4 +1171,17 @@
     initContactForms();
     initInteractiveDotGrid();
     initFooterUtilities();
+
+    const loadLappai = () => {
+        if (document.querySelector('script[data-lappai]')) return;
+        const stylesheet = document.createElement("link");
+        stylesheet.rel = "stylesheet";
+        stylesheet.href = "lappai.css";
+        document.head.appendChild(stylesheet);
+        const chatScript = document.createElement("script");
+        chatScript.src = "lappai.js";
+        chatScript.dataset.lappai = "true";
+        document.body.appendChild(chatScript);
+    };
+    loadLappai();
 })();

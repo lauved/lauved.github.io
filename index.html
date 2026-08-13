@@ -11,6 +11,7 @@
             document.documentElement.setAttribute("data-theme", savedTheme || preferredTheme);
         })();
     </script>
+    <script src="appearance-init.js"></script>
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="site-page">
@@ -29,9 +30,9 @@
 
             <div class="nav__actions">
                 <a href="assets/resume.pdf" class="nav-resume" target="_blank" rel="noopener">Resume</a>
-                <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
-                    <span class="theme-toggle__icon" aria-hidden="true">&#9789;</span>
-                    <span class="theme-toggle__text">Dark</span>
+                <button class="theme-toggle appearance-toggle" id="appearanceToggle" type="button" aria-expanded="false" aria-label="Customize appearance">
+                    <span class="theme-toggle__icon" aria-hidden="true">&#127912;</span>
+                    <span class="theme-toggle__text">Appearance</span>
                 </button>
             </div>
         </div>
@@ -40,6 +41,7 @@
     <main class="site-main site-main--home">
         <section class="hero hero--home" id="home-top">
             <div class="hero-text">
+                <p class="hero-kicker">Terrence Lappay — UI/UX Designer &amp; Front-End Developer</p>
                 <p class="hero-availability"><span aria-hidden="true"></span> Available for OJT, internships, and junior roles</p>
                 <h1>UI/UX designer<br>& front-end developer.</h1>
                 <p>
@@ -57,7 +59,17 @@
                     <a href="https://github.com/lauved" target="_blank" rel="noopener">GitHub</a>
                     <a href="https://www.linkedin.com/in/terrence-paras-lappay-6337353a8/" target="_blank" rel="noopener">LinkedIn</a>
                 </div>
+                <div class="hero-stats" aria-label="Portfolio overview">
+                    <div><strong>8</strong><span>Selected projects</span></div>
+                    <div><strong>14</strong><span>Technologies &amp; tools</span></div>
+                    <div><strong>Design + Development</strong><span>Primary focus</span></div>
+                </div>
             </div>
+
+            <figure class="hero-portrait">
+                <img src="assets/me.png" alt="Portrait of Terrence Lappay" />
+                <figcaption><strong>Terrence Lappay</strong><span>UI/UX Designer &amp; Front-End Developer</span></figcaption>
+            </figure>
 
         </section>
 

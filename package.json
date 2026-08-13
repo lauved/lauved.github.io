@@ -1,0 +1,14 @@
+{
+  "name": "terrence-lappay-portfolio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "openai": "^7.4.0"
+  },
+  "devDependencies": {
+    "vercel": "^58.10.0"
+  }
+}
