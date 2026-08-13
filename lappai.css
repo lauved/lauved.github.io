@@ -26,9 +26,9 @@
 .lappai__message--user .lappai__bubble { border-color:transparent; border-radius:15px 15px 3px 15px!important; background:var(--accent); color:var(--bg); }
 .lappai__action { display:inline-flex; margin-top:7px; padding:7px 10px; border:1px solid var(--accent); border-radius:999px!important; color:var(--accent)!important; font-size:12px; font-weight:750; text-decoration:none; }
 .lappai__action:hover { background:var(--accent); color:var(--bg)!important; }
-.lappai__suggestions { display:flex; gap:7px; overflow-x:auto; padding:0 17px 12px; scrollbar-width:none; }
+.lappai__suggestions { display:flex; flex-wrap:wrap; align-content:flex-start; gap:7px; max-height:92px; overflow-x:hidden; overflow-y:auto; padding:0 17px 12px; scrollbar-width:thin; scrollbar-color:rgba(var(--accent-rgb),.55) transparent; }
 .lappai__suggestions:empty { display:none; }
-.lappai__suggestions button { flex:0 0 auto; padding:8px 11px; border:1px solid var(--border); border-radius:999px!important; background:var(--surface); color:var(--text); font-size:11px; cursor:pointer; }
+.lappai__suggestions button { flex:0 0 auto; max-width:100%; padding:8px 11px; border:1px solid var(--border); border-radius:999px!important; background:var(--surface); color:var(--text); font-size:11px; white-space:normal; text-align:left; cursor:pointer; }
 .lappai__suggestions button:hover { border-color:var(--accent); color:var(--accent); }
 .lappai__form { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px; padding:12px; border-top:1px solid var(--border); background:var(--surface); }
 .lappai__form input { min-width:0; height:44px; padding:0 12px; border:1px solid var(--border); border-radius:10px!important; background:var(--surface-strong); color:var(--text); font:inherit; font-size:14px; }
@@ -45,5 +45,6 @@
     .lappai__window { position:fixed; inset:12px 12px calc(12px + env(safe-area-inset-bottom)); width:auto; height:auto; max-height:none; border-radius:18px!important; }
     .lappai.is-open .lappai__launcher { opacity:0; pointer-events:none; }
     .lappai__conversation { padding:14px; }
+    .lappai__suggestions { max-height:124px; }
 }
 @media (prefers-reduced-motion:reduce) { .lappai__launcher,.lappai__window { transition:none; }.lappai__typing i { animation:none; } }
