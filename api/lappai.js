@@ -1,9 +1,9 @@
-import OpenAI from "openai";
 import { portfolioContext } from "../data/portfolio-context.js";
 
 export const maxDuration = 30;
 
-const OPENAI_TIMEOUT_MS = 20000;
+const GEMINI_TIMEOUT_MS = 15000;
+const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
 
 const instructions = `You are LAPPAI, the personal AI portfolio assistant for Terrence Lappay.
 
@@ -41,7 +41,7 @@ export default async function handler(request, response) {
         return response.status(405).json({ error: "Method not allowed" });
     }
 
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.GEMINI_API_KEY) {
         return response.status(503).json({ error: "LAPPAI is temporarily unavailable" });
     }
 
@@ -51,40 +51,63 @@ export default async function handler(request, response) {
     }
 
     try {
-        const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
         const controller = new AbortController();
-        let deadlineTimer;
+        const timeout = setTimeout(() => controller.abort(), GEMINI_TIMEOUT_MS);
+        const contents = messages.reduce((items, message) => {
+            const role = message.role === "assistant" ? "model" : "user";
+            if (!items.length && role === "model") return items;
+            const previous = items[items.length - 1];
+            if (previous?.role === role) {
+                previous.parts[0].text += `\n${message.content}`;
+            } else {
+                items.push({ role, parts: [{ text: message.content }] });
+            }
+            return items;
+        }, []);
 
-        let result;
+        let providerResponse;
         try {
-            const request = client.responses.create({
-                model: process.env.OPENAI_MODEL || "gpt-4o-mini",
-                instructions,
-                input: messages,
-                max_output_tokens: 300
-            }, { signal: controller.signal });
-
-            const deadline = new Promise((_, reject) => {
-                deadlineTimer = setTimeout(() => {
-                    controller.abort();
-                    const error = new Error("LAPPAI request timed out");
-                    error.code = "LAPPAI_TIMEOUT";
-                    reject(error);
-                }, OPENAI_TIMEOUT_MS);
-            });
-
-            result = await Promise.race([request, deadline]);
+            providerResponse = await fetch(
+                `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(GEMINI_MODEL)}:generateContent`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-goog-api-key": process.env.GEMINI_API_KEY
+                    },
+                    body: JSON.stringify({
+                        systemInstruction: { parts: [{ text: instructions }] },
+                        contents,
+                        generationConfig: {
+                            maxOutputTokens: 300,
+                            temperature: 0.45
+                        }
+                    }),
+                    signal: controller.signal
+                }
+            );
         } finally {
-            clearTimeout(deadlineTimer);
+            clearTimeout(timeout);
         }
-        const answer = result.output_text?.trim();
+
+        const result = await providerResponse.json().catch(() => ({}));
+        if (!providerResponse.ok) {
+            const providerError = new Error(result?.error?.message || "Gemini request failed");
+            providerError.status = providerResponse.status;
+            providerError.code = result?.error?.status;
+            throw providerError;
+        }
+
+        const answer = result?.candidates?.[0]?.content?.parts
+            ?.map(part => part?.text || "")
+            .join("")
+            .trim();
         if (!answer) throw new Error("Empty model response");
         return response.status(200).json({ answer });
     } catch (error) {
         const timedOut = error?.name === "AbortError"
-            || error?.code === "ABORT_ERR"
-            || error?.code === "LAPPAI_TIMEOUT";
-        console.error("LAPPAI request failed", {
+            || error?.code === "ABORT_ERR";
+        console.error("LAPPAI Gemini request failed", {
             status: Number.isInteger(error?.status) ? error.status : undefined,
             code: typeof error?.code === "string" ? error.code : undefined,
             type: typeof error?.type === "string" ? error.type : undefined,

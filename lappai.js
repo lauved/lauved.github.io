@@ -227,6 +227,26 @@
         return "I can help with Terrence's projects, UI/UX and frontend skills, technologies, education, availability, resume, and contact details. Try asking about a specific project such as LUNAS, BioTrack, DermaScan, or ClarifAI.";
     };
 
+    const requestAiAnswer = async messages => {
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 18000);
+        try {
+            const response = await fetch("/api/lappai", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ messages: messages.slice(-12) }),
+                signal: controller.signal
+            });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || typeof data.answer !== "string" || !data.answer.trim()) {
+                throw new Error(data.error || "AI response unavailable");
+            }
+            return data.answer.trim();
+        } finally {
+            window.clearTimeout(timeout);
+        }
+    };
+
     const send = async (rawValue) => {
         const value = String(rawValue || "").trim();
         if (!value || isSending) return;
@@ -238,8 +258,13 @@
         setSending(true);
         const typing = showTyping();
         try {
-            await new Promise(resolve => window.setTimeout(resolve, 450));
-            const assistantMessage = { role: "assistant", content: answerLocally(value) };
+            let answer;
+            try {
+                answer = await requestAiAnswer(history);
+            } catch (_) {
+                answer = answerLocally(value);
+            }
+            const assistantMessage = { role: "assistant", content: answer };
             history.push(assistantMessage);
             saveHistory();
             typing.remove();
