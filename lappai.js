@@ -1,6 +1,6 @@
 (() => {
     const STORAGE_KEY = "lappaiConversation";
-    const greeting = "Hello! I'm LAPPAI, Terrence's personal portfolio assistant. Ask me anything about his skills, projects, tech stack, experience, or design work.";
+    const greeting = "Hello! I'm LAPPAI, Terrence's local portfolio assistant. I use predefined portfolio information rather than generative AI. Ask me about his skills, projects, tech stack, experience, or design work.";
     const suggestions = [
         "View Terrence's Projects",
         "What are his skills?",
@@ -38,6 +38,8 @@
             </form>
         </section>`;
     document.body.appendChild(shell);
+
+    shell.querySelector(".lappai__header span").lastChild.textContent = "Local assistant · Predefined answers";
 
     const launcher = shell.querySelector(".lappai__launcher");
     const windowElement = shell.querySelector(".lappai__window");
@@ -227,26 +229,6 @@
         return "I can help with Terrence's projects, UI/UX and frontend skills, technologies, education, availability, resume, and contact details. Try asking about a specific project such as LUNAS, BioTrack, DermaScan, or ClarifAI.";
     };
 
-    const requestAiAnswer = async messages => {
-        const controller = new AbortController();
-        const timeout = window.setTimeout(() => controller.abort(), 18000);
-        try {
-            const response = await fetch("/api/lappai", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ messages: messages.slice(-12) }),
-                signal: controller.signal
-            });
-            const data = await response.json().catch(() => ({}));
-            if (!response.ok || typeof data.answer !== "string" || !data.answer.trim()) {
-                throw new Error(data.error || "AI response unavailable");
-            }
-            return data.answer.trim();
-        } finally {
-            window.clearTimeout(timeout);
-        }
-    };
-
     const send = async (rawValue) => {
         const value = String(rawValue || "").trim();
         if (!value || isSending) return;
@@ -258,12 +240,8 @@
         setSending(true);
         const typing = showTyping();
         try {
-            let answer;
-            try {
-                answer = await requestAiAnswer(history);
-            } catch (_) {
-                answer = answerLocally(value);
-            }
+            await new Promise(resolve => window.setTimeout(resolve, 350));
+            const answer = answerLocally(value);
             const assistantMessage = { role: "assistant", content: answer };
             history.push(assistantMessage);
             saveHistory();
