@@ -137,27 +137,37 @@
         input.value = "";
         setSending(true);
         const typing = showTyping();
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 25000);
         try {
             const response = await fetch("/api/lappai", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ messages: history.slice(-12) })
+                body: JSON.stringify({ messages: history.slice(-12) }),
+                signal: controller.signal
             });
-            if (!response.ok) throw new Error("Request failed");
-            const data = await response.json();
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(data.error || "Request failed");
             if (typeof data.answer !== "string" || !data.answer.trim()) throw new Error("Invalid response");
             const assistantMessage = { role: "assistant", content: data.answer.trim() };
             history.push(assistantMessage);
             saveHistory();
             typing.remove();
             appendMessage(assistantMessage, navigationFor(value));
-        } catch (_) {
-            const errorMessage = { role: "assistant", content: "Sorry, LAPPAI is having trouble responding right now. Please try again." };
+        } catch (error) {
+            const serverMessage = typeof error?.message === "string" && !/failed to fetch|networkerror|load failed/i.test(error.message)
+                ? error.message
+                : "Sorry, LAPPAI could not connect right now. Please try again in a moment.";
+            const content = error?.name === "AbortError"
+                ? "Sorry, LAPPAI took too long to respond. Please try again."
+                : serverMessage;
+            const errorMessage = { role: "assistant", content };
             history.push(errorMessage);
             saveHistory();
             typing.remove();
             appendMessage(errorMessage);
         } finally {
+            window.clearTimeout(timeout);
             setSending(false);
             input.focus();
         }

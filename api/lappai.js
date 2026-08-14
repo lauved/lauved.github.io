@@ -1,6 +1,10 @@
 import OpenAI from "openai";
 import { portfolioContext } from "../data/portfolio-context.js";
 
+export const maxDuration = 30;
+
+const OPENAI_TIMEOUT_MS = 20000;
+
 const instructions = `You are LAPPAI, the personal AI portfolio assistant for Terrence Lappay.
 
 Your purpose is to help recruiters, visitors, clients, and potential collaborators understand Terrence's professional background.
@@ -48,22 +52,48 @@ export default async function handler(request, response) {
 
     try {
         const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-        const result = await client.responses.create({
-            model: process.env.OPENAI_MODEL || "gpt-5.4-mini",
-            instructions,
-            input: messages,
-            max_output_tokens: 350
-        });
+        const controller = new AbortController();
+        let deadlineTimer;
+
+        let result;
+        try {
+            const request = client.responses.create({
+                model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+                instructions,
+                input: messages,
+                max_output_tokens: 300
+            }, { signal: controller.signal });
+
+            const deadline = new Promise((_, reject) => {
+                deadlineTimer = setTimeout(() => {
+                    controller.abort();
+                    const error = new Error("LAPPAI request timed out");
+                    error.code = "LAPPAI_TIMEOUT";
+                    reject(error);
+                }, OPENAI_TIMEOUT_MS);
+            });
+
+            result = await Promise.race([request, deadline]);
+        } finally {
+            clearTimeout(deadlineTimer);
+        }
         const answer = result.output_text?.trim();
         if (!answer) throw new Error("Empty model response");
         return response.status(200).json({ answer });
     } catch (error) {
+        const timedOut = error?.name === "AbortError"
+            || error?.code === "ABORT_ERR"
+            || error?.code === "LAPPAI_TIMEOUT";
         console.error("LAPPAI request failed", {
             status: Number.isInteger(error?.status) ? error.status : undefined,
             code: typeof error?.code === "string" ? error.code : undefined,
             type: typeof error?.type === "string" ? error.type : undefined,
             message: error instanceof Error ? error.message : "Unknown error"
         });
-        return response.status(500).json({ error: "LAPPAI could not respond" });
+        return response.status(timedOut ? 504 : 500).json({
+            error: timedOut
+                ? "LAPPAI took too long to respond. Please try again."
+                : "LAPPAI could not respond. Please try again."
+        });
     }
 }
