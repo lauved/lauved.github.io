@@ -127,6 +127,106 @@
         scrollToLatest();
         return element;
     };
+
+    const normalizeQuestion = value => String(value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    const hasAny = (value, terms) => terms.some(term => value.includes(term));
+
+    const projectAnswers = [
+        {
+            terms: ["clarifai"],
+            answer: "ClarifAI is an AI-powered data-insights and decision-support web platform for Kyro Core I.T. Solutions. Terrence worked as its Frontend Developer and UI/UX Designer, contributing to client requirements, user flows, interface decisions, analytics experiences, and frontend presentation."
+        },
+        {
+            terms: ["sneakhub", "sneak hub"],
+            answer: "SneakHub is a responsive footwear catalog built with HTML, CSS, and JavaScript. Terrence handled its UI/UX design and frontend development, including navigation, promotional areas, product cards, visual hierarchy, and responsive behavior."
+        },
+        {
+            terms: ["petpal", "pet pal"],
+            answer: "PetPal is an interactive 2D pixel-art mobile game where players adopt and care for a virtual pet through feeding, grooming, and play. Terrence designed its UI/UX, interaction flow, frontend presentation, and consistent pixel-art direction."
+        },
+        {
+            terms: ["baskit"],
+            answer: "Baskit is a mobile and web grocery-list and pickup experience. Terrence designed the customer journey, mobile and web concepts, frontend screens, reusable components, and collection-code interactions."
+        },
+        {
+            terms: ["dermascan", "derma scan"],
+            answer: "DermaScan is an AI-assisted healthcare mobile concept for analyzing skin images. Terrence was its UI/UX Designer and Front-End Developer, creating the capture, scanning, results, and consultation flows in Flutter and Dart. Its documented AI technology is a Convolutional Neural Network (CNN); no specific architecture or provider is listed."
+        },
+        {
+            terms: ["echoes", "lighthouse"],
+            answer: "Echoes of the Lighthouse is an open-world 3D exploration and puzzle game. As Game Artist, Terrence contributed visual concepts, 3D art, environmental presentation, landmarks, contrast, and navigation cues."
+        },
+        {
+            terms: ["biotrack", "bio track"],
+            answer: "BioTrack is a cross-platform healthcare monitoring system spanning Flutter mobile, Next.js/React web, and Electron desktop. Terrence designed and developed responsive patient and provider interfaces, structured health information, and supported frontend-to-API integration and cross-platform consistency."
+        },
+        {
+            terms: ["lunas"],
+            answer: "LUNAS is an AI-assisted urban infrastructure maintenance capstone for Dagupan City. Terrence served as System Analyst and UI/UX Designer, working on requirements, Flutter screens and navigation, Google Maps location selection, and the overall UI/UX direction."
+        }
+    ];
+
+    const answerLocally = rawQuestion => {
+        const question = normalizeQuestion(rawQuestion);
+        const project = projectAnswers.find(item => hasAny(question, item.terms));
+        if (project) return project.answer;
+
+        if (hasAny(question, ["hello", "hi", "hey", "kumusta", "kamusta", "good morning", "good afternoon", "good evening"])) {
+            return "Hi! I'm LAPPAI, Terrence's portfolio assistant. Ask me about his projects, skills, education, design work, resume, or contact details.";
+        }
+        if (hasAny(question, ["thank", "salamat", "thanks"])) {
+            return "You're welcome! Ask me anything else about Terrence's portfolio.";
+        }
+        if (hasAny(question, ["who is terrence", "about terrence", "tell me about terrence", "sino si terrence", "profile"])) {
+            return "Terrence Paras Lappay is a UI/UX Designer and Front-End Developer based in Pangasinan, Philippines. He creates accessible, responsive digital experiences across web, mobile, AI-assisted products, and games, and is open to OJT, internships, junior roles, freelance work, and collaborations.";
+        }
+        if (hasAny(question, ["all project", "projects", "project", "portfolio", "works", "ginawa"])) {
+            return "Terrence's selected projects are ClarifAI, SneakHub, PetPal, Baskit, DermaScan, Echoes of the Lighthouse, BioTrack, and LUNAS. They cover web, mobile, healthcare, AI-assisted systems, e-commerce concepts, and games.";
+        }
+        if (hasAny(question, ["ui ux", "ui/ux", "design skill", "designer", "figma", "wireframe", "prototype"])) {
+            return "Terrence's UI/UX skills include interface and experience design, wireframing, prototyping, user flows, responsive and mobile-first design, design systems, visual hierarchy, typography, accessibility, and human-centered design. He uses Figma for interface planning and design.";
+        }
+        if (hasAny(question, ["frontend", "front end", "coding", "web development", "html", "css", "javascript"])) {
+            return "Terrence's strongest frontend skills include responsive web development, HTML, CSS, JavaScript, React, Next.js, component-based development, cross-browser compatibility, accessibility, and REST API integration. He also develops mobile interfaces with Flutter, Dart, Kotlin, and Jetpack Compose.";
+        }
+        if (hasAny(question, ["backend", "database", "server", "mysql", "mongodb", "postgresql", "django", "fastapi", "express", "php"])) {
+            return "Terrence's documented backend and data technologies include Django, PHP, FastAPI, Express, MySQL, MongoDB, PostgreSQL, and REST API integration. His primary focus remains UI/UX and frontend implementation.";
+        }
+        if (hasAny(question, ["tech stack", "technology", "technologies", "tools", "software", "programming language", "stack"])) {
+            return "Terrence works with HTML, CSS, JavaScript, React, Next.js, Flutter, Dart, Kotlin, Jetpack Compose, Django, PHP, FastAPI, Express, MySQL, MongoDB, and PostgreSQL. His tools include Figma, Git, GitHub, VS Code, Postman, AWS, Unity, and Blender.";
+        }
+        if (hasAny(question, ["skill", "strength", "capability", "kayang gawin", "marunong"])) {
+            return "Terrence combines UI/UX design with frontend implementation. His strengths include responsive interfaces, prototyping, user flows, accessibility, component-based development, problem solving, collaboration, adaptability, attention to detail, and creative thinking.";
+        }
+        if (hasAny(question, ["study", "studying", "education", "school", "university", "course", "college", "student", "nag aaral"])) {
+            return "Terrence is pursuing a Bachelor of Science in Information Technology at PHINMA University of Pangasinan. He began the program in 2023.";
+        }
+        if (hasAny(question, ["experience", "employment", "job history", "worked", "professional experience"])) {
+            return "Terrence's portfolio documents project experience across LUNAS, BioTrack, DermaScan, and the ClarifAI client project. It does not list formal employment history or completed company roles beyond that documented client work.";
+        }
+        if (hasAny(question, ["why hire", "hire terrence", "good candidate", "why should", "recruit", "employ"])) {
+            return "Terrence is a strong candidate for teams that need both interface thinking and practical frontend execution. He brings responsive design, accessibility awareness, prototyping, implementation skills, attention to detail, adaptability, and experience across web, mobile, AI-assisted, and healthcare projects.";
+        }
+        if (hasAny(question, ["available", "availability", "ojt", "intern", "junior", "freelance", "collaboration", "open for work"])) {
+            return "Yes. Terrence is available for OJT opportunities, internships, junior roles, freelance work, and team collaborations.";
+        }
+        if (hasAny(question, ["contact", "email", "phone", "reach", "message", "linkedin", "github", "location", "where is", "taga saan"])) {
+            return "Terrence is based in Pangasinan, Philippines. You can email him at tepa.lappay.up@phinmaed.com, find him on LinkedIn, or view his work on GitHub. Use the Contact section for the quickest route.";
+        }
+        if (hasAny(question, ["resume", "cv", "curriculum vitae"])) {
+            return "You can open Terrence's resume using the Resume button in the navigation or the link below.";
+        }
+
+        return "I can help with Terrence's projects, UI/UX and frontend skills, technologies, education, availability, resume, and contact details. Try asking about a specific project such as LUNAS, BioTrack, DermaScan, or ClarifAI.";
+    };
+
     const send = async (rawValue) => {
         const value = String(rawValue || "").trim();
         if (!value || isSending) return;
@@ -137,37 +237,14 @@
         input.value = "";
         setSending(true);
         const typing = showTyping();
-        const controller = new AbortController();
-        const timeout = window.setTimeout(() => controller.abort(), 25000);
         try {
-            const response = await fetch("/api/lappai", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ messages: history.slice(-12) }),
-                signal: controller.signal
-            });
-            const data = await response.json().catch(() => ({}));
-            if (!response.ok) throw new Error(data.error || "Request failed");
-            if (typeof data.answer !== "string" || !data.answer.trim()) throw new Error("Invalid response");
-            const assistantMessage = { role: "assistant", content: data.answer.trim() };
+            await new Promise(resolve => window.setTimeout(resolve, 450));
+            const assistantMessage = { role: "assistant", content: answerLocally(value) };
             history.push(assistantMessage);
             saveHistory();
             typing.remove();
             appendMessage(assistantMessage, navigationFor(value));
-        } catch (error) {
-            const serverMessage = typeof error?.message === "string" && !/failed to fetch|networkerror|load failed/i.test(error.message)
-                ? error.message
-                : "Sorry, LAPPAI could not connect right now. Please try again in a moment.";
-            const content = error?.name === "AbortError"
-                ? "Sorry, LAPPAI took too long to respond. Please try again."
-                : serverMessage;
-            const errorMessage = { role: "assistant", content };
-            history.push(errorMessage);
-            saveHistory();
-            typing.remove();
-            appendMessage(errorMessage);
         } finally {
-            window.clearTimeout(timeout);
             setSending(false);
             input.focus();
         }
