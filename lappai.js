@@ -69,7 +69,7 @@
         const value = question.toLowerCase();
         if (/project|work|portfolio/.test(value)) return { label: "View Projects →", href: location.pathname.endsWith("index.html") || location.pathname === "/" ? "#home-works" : "index.html#home-works" };
         if (/skill|tech|stack|capabilit/.test(value)) return { label: "View Skills →", href: location.pathname.endsWith("index.html") || location.pathname === "/" ? "#home-about" : "index.html#home-about" };
-        if (/resume|cv/.test(value)) return { label: "View Resume →", href: "assets/resume.pdf", external: true };
+        if (/resume|cv/.test(value)) return { label: "Download Resume →", href: "assets/resume.pdf", download: "Terrence-Lappay-Resume.pdf" };
         if (/contact|email|hire|reach/.test(value)) return { label: "Contact Terrence →", href: location.pathname.endsWith("index.html") || location.pathname === "/" ? "#home-contact" : "index.html#home-contact" };
         return null;
     };
@@ -86,6 +86,7 @@
             link.href = action.href;
             link.textContent = action.label;
             if (action.external) { link.target = "_blank"; link.rel = "noopener"; }
+            if (action.download) link.download = action.download;
             link.addEventListener("click", () => setOpen(false));
             wrapper.appendChild(link);
         }

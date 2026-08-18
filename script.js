@@ -208,6 +208,30 @@
 
         stage.innerHTML = projects.map(renderProject).join("");
         const homeProjectCards = stage.querySelectorAll(".home-project-card");
+        const deckControls = document.createElement("div");
+        deckControls.className = "home-project-deck-controls";
+        deckControls.innerHTML = `
+            <button type="button" data-project-deck="previous" aria-label="Show previous project">← Previous</button>
+            <p aria-live="polite"></p>
+            <button type="button" data-project-deck="next" aria-label="Show next project">Next →</button>`;
+        stage.after(deckControls);
+        const deckStatus = deckControls.querySelector("p");
+        let matchingCards = [];
+        let activeCardIndex = 0;
+
+        const showActiveCard = (index) => {
+            if (!matchingCards.length) return;
+            activeCardIndex = (index + matchingCards.length) % matchingCards.length;
+            homeProjectCards.forEach(card => {
+                const isActive = card === matchingCards[activeCardIndex];
+                card.hidden = !isActive;
+                card.classList.toggle("is-active", isActive);
+            });
+            const title = matchingCards[activeCardIndex].querySelector("h3")?.textContent || "Project";
+            deckStatus.textContent = `${activeCardIndex + 1} of ${matchingCards.length} · ${title}`;
+            deckControls.hidden = matchingCards.length < 2;
+            stage.classList.toggle("has-multiple-projects", matchingCards.length > 1);
+        };
 
         const setHomeFilter = (filter, options = {}) => {
             homeFilterButtons.forEach((button) => {
@@ -216,10 +240,12 @@
                 button.setAttribute("aria-pressed", String(isActive));
             });
 
-            homeProjectCards.forEach((card) => {
+            matchingCards = Array.from(homeProjectCards).filter((card) => {
                 const categories = (card.dataset.categories || "").split(" ");
-                card.hidden = filter !== "all" && !categories.includes(filter);
+                return filter === "all" || categories.includes(filter);
             });
+            activeCardIndex = 0;
+            showActiveCard(activeCardIndex);
 
             if (options.updateUrl) updateCategoryUrl(filter);
             if (options.track) trackEvent("Project Category Selected", { category: filter, location: "home" });
@@ -229,6 +255,18 @@
             button.addEventListener("click", () => {
                 setHomeFilter(button.dataset.homeFilter || "all", { updateUrl: true, track: true });
             });
+        });
+
+        deckControls.addEventListener("click", event => {
+            const button = event.target.closest("[data-project-deck]");
+            if (!button) return;
+            const direction = button.dataset.projectDeck === "next" ? 1 : -1;
+            showActiveCard(activeCardIndex + direction);
+            trackEvent("Project Deck Navigated", { direction: direction > 0 ? "next" : "previous" });
+        });
+        stage.addEventListener("keydown", event => {
+            if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+            showActiveCard(activeCardIndex + (event.key === "ArrowRight" ? 1 : -1));
         });
 
         setHomeFilter(getCategoryFromUrl());

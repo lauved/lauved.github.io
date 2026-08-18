@@ -940,11 +940,70 @@ body {
 }
 
 .home-project-stage {
-    display: grid;
-    gap: 24px;
+    position: relative;
+    display: block;
+    isolation: isolate;
 }
 
 .home-project-card[hidden] { display: none; }
+
+.home-project-stage.has-multiple-projects::before,
+.home-project-stage.has-multiple-projects::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    pointer-events: none;
+}
+
+.home-project-stage.has-multiple-projects::before {
+    transform: translateY(10px) scale(0.985);
+    opacity: 0.72;
+}
+
+.home-project-stage.has-multiple-projects::after {
+    transform: translateY(20px) scale(0.97);
+    opacity: 0.42;
+}
+
+.home-project-stage .home-project-card {
+    position: relative;
+    z-index: 1;
+    animation: home-project-card-in 0.24s ease;
+}
+
+.home-project-deck-controls {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    margin-top: 34px;
+}
+
+.home-project-deck-controls[hidden] { display: none; }
+.home-project-deck-controls p { margin: 0; color: var(--muted); font-size: 14px; text-align: center; }
+.home-project-deck-controls button {
+    padding: 11px 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.home-project-deck-controls button:hover { border-color: var(--text); box-shadow: var(--shadow); transform: translateY(-1px); }
+
+@keyframes home-project-card-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.995); }
+    to { opacity: 1; transform: none; }
+}
 
 .home-project-card {
     display: grid;
@@ -1030,6 +1089,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
     .home-project-photo img { transition: none; }
+    .home-project-stage .home-project-card { animation: none; }
 }
 
 .gradient-art {
