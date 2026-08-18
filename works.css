@@ -87,7 +87,15 @@
 }
 
 .additional-projects h2 { margin-top: 7px; font-size: 27px; }
-.additional-projects__links { display: grid; gap: 10px; }
+.additional-projects__links {
+    display: grid;
+    gap: 10px;
+    opacity: 1;
+    transition: opacity 0.12s ease;
+}
+
+.additional-projects__links.is-filtering { opacity: 0; }
+.additional-projects__links [hidden] { display: none; }
 
 .additional-projects__links a {
     display: flex;
@@ -103,6 +111,7 @@
 
 .additional-projects__links a:hover { transform: translateY(-2px); border-color: var(--text); }
 .additional-projects__links span { color: var(--muted); text-align: right; }
+.additional-projects__empty { margin: 0; padding: 15px 0; color: var(--muted); }
 
 .project-card {
     display: grid;
@@ -377,6 +386,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .additional-projects__links,
     .project-browser-frame,
     .project-browser-frame__viewport img,
     .project-brand-badge,

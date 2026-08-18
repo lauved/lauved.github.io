@@ -2,6 +2,9 @@
     const root = document.documentElement;
     const filterButtons = document.querySelectorAll(".filter-chip");
     const projectCards = document.querySelectorAll(".project-card");
+    const additionalProjectsList = document.querySelector(".additional-projects__links");
+    const additionalProjectLinks = document.querySelectorAll(".additional-projects__links [data-categories]");
+    const additionalProjectsEmpty = document.querySelector(".additional-projects__empty");
     const homeFilterButtons = document.querySelectorAll(".home-filter-chip");
     const homeProjectCards = document.querySelectorAll(".home-project-card");
     const contactForms = document.querySelectorAll(".contact-form");
@@ -96,6 +99,21 @@
             return;
         }
 
+        const filterAdditionalProjects = (filter) => {
+            let visibleProjects = 0;
+
+            additionalProjectLinks.forEach((project) => {
+                const categories = (project.dataset.categories || "").split(" ").filter(Boolean);
+                const shouldShow = filter === "all" || categories.includes(filter);
+                project.hidden = !shouldShow;
+                if (shouldShow) visibleProjects += 1;
+            });
+
+            if (additionalProjectsEmpty) {
+                additionalProjectsEmpty.hidden = visibleProjects !== 0;
+            }
+        };
+
         const setFilter = (filter) => {
             filterButtons.forEach((button) => {
                 const isActive = button.dataset.filter === filter;
@@ -108,6 +126,18 @@
                 const shouldShow = filter === "all" || categories.includes(filter);
                 card.hidden = !shouldShow;
             });
+
+            if (additionalProjectsList) {
+                additionalProjectsList.classList.add("is-filtering");
+                filterAdditionalProjects(filter);
+                window.requestAnimationFrame(() => {
+                    window.requestAnimationFrame(() => {
+                        additionalProjectsList.classList.remove("is-filtering");
+                    });
+                });
+            } else {
+                filterAdditionalProjects(filter);
+            }
         };
 
         filterButtons.forEach((button) => {
