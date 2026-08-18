@@ -209,15 +209,20 @@
         stage.innerHTML = projects.map(renderProject).join("");
         const homeProjectCards = stage.querySelectorAll(".home-project-card");
         const scrollTrack = document.createElement("div");
-        scrollTrack.className = "home-project-scroll-track";
+        scrollTrack.className = "home-project-deck";
         stage.before(scrollTrack);
         scrollTrack.appendChild(stage);
-        const deckStatus = document.createElement("p");
-        deckStatus.className = "home-project-deck-status";
-        deckStatus.setAttribute("aria-live", "polite");
-        stage.appendChild(deckStatus);
+        const deckControls = document.createElement("div");
+        deckControls.className = "home-project-deck-controls";
+        deckControls.innerHTML = `
+            <button type="button" data-project-deck="previous" aria-label="Show previous project">← Previous</button>
+            <p aria-live="polite"></p>
+            <button type="button" data-project-deck="next" aria-label="Show next project">Next →</button>`;
+        scrollTrack.appendChild(deckControls);
+        const deckStatus = deckControls.querySelector("p");
         let matchingCards = [];
         let activeCardIndex = 0;
+        let touchStartX = 0;
 
         const showActiveCard = (index) => {
             if (!matchingCards.length) return;
@@ -229,20 +234,18 @@
             });
             const title = matchingCards[activeCardIndex].querySelector("h3")?.textContent || "Project";
             deckStatus.textContent = `${activeCardIndex + 1} of ${matchingCards.length} · ${title}`;
+            deckControls.hidden = matchingCards.length < 2;
+            deckControls.querySelector('[data-project-deck="previous"]').disabled = activeCardIndex === 0;
+            deckControls.querySelector('[data-project-deck="next"]').disabled = activeCardIndex === matchingCards.length - 1;
             stage.classList.toggle("has-multiple-projects", matchingCards.length > 1);
         };
 
-        const updateCardFromScroll = () => {
-            if (matchingCards.length < 2) return;
-            const rect = scrollTrack.getBoundingClientRect();
-            const distance = Math.max(1, scrollTrack.offsetHeight - window.innerHeight);
-            const progress = Math.min(1, Math.max(0, -rect.top / distance));
-            const index = Math.min(matchingCards.length - 1, Math.floor(progress * matchingCards.length));
-            if (index !== activeCardIndex) {
-                const direction = index > activeCardIndex ? "next" : "previous";
-                showActiveCard(index);
-                trackEvent("Project Deck Navigated", { direction });
-            }
+        const navigateDeck = (direction) => {
+            const nextIndex = activeCardIndex + direction;
+            if (nextIndex < 0 || nextIndex >= matchingCards.length) return false;
+            showActiveCard(nextIndex);
+            trackEvent("Project Deck Navigated", { direction: direction > 0 ? "next" : "previous" });
+            return true;
         };
 
         const setHomeFilter = (filter, options = {}) => {
@@ -257,7 +260,6 @@
                 return filter === "all" || categories.includes(filter);
             });
             activeCardIndex = 0;
-            scrollTrack.style.minHeight = `${100 + Math.max(0, matchingCards.length - 1) * 32}vh`;
             showActiveCard(activeCardIndex);
 
             if (options.updateUrl) updateCategoryUrl(filter);
@@ -270,7 +272,25 @@
             });
         });
 
-        window.addEventListener("scroll", updateCardFromScroll, { passive: true });
+        stage.tabIndex = 0;
+        stage.setAttribute("aria-label", "Horizontal project card deck.");
+        deckControls.addEventListener("click", event => {
+            const button = event.target.closest("[data-project-deck]");
+            if (!button) return;
+            navigateDeck(button.dataset.projectDeck === "next" ? 1 : -1);
+        });
+        stage.addEventListener("keydown", event => {
+            if (!["ArrowLeft", "ArrowRight"].includes(event.key)) return;
+            const direction = event.key === "ArrowRight" ? 1 : -1;
+            if (navigateDeck(direction)) event.preventDefault();
+        });
+        stage.addEventListener("touchstart", event => {
+            touchStartX = event.changedTouches[0].clientX;
+        }, { passive: true });
+        stage.addEventListener("touchend", event => {
+            const distance = touchStartX - event.changedTouches[0].clientX;
+            if (Math.abs(distance) > 45) navigateDeck(distance > 0 ? 1 : -1);
+        }, { passive: true });
 
         setHomeFilter(getCategoryFromUrl());
         window.addEventListener("popstate", () => setHomeFilter(getCategoryFromUrl()));
