@@ -940,10 +940,13 @@ body {
 }
 
 .home-project-stage {
-    position: relative;
+    position: sticky;
+    top: 96px;
     display: block;
     isolation: isolate;
 }
+
+.home-project-scroll-track { position: relative; }
 
 .home-project-card[hidden] { display: none; }
 
@@ -976,29 +979,16 @@ body {
     animation: home-project-card-in 0.24s ease;
 }
 
-.home-project-deck-controls {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 16px;
-    margin-top: 34px;
-}
-
-.home-project-deck-controls[hidden] { display: none; }
-.home-project-deck-controls p { margin: 0; color: var(--muted); font-size: 14px; text-align: center; }
-.home-project-deck-controls button {
-    padding: 11px 16px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    background: var(--surface);
-    color: var(--text);
-    cursor: pointer;
-    font: inherit;
-    font-size: 14px;
+.home-project-deck-status {
+    position: absolute;
+    right: 20px;
+    bottom: -30px;
+    z-index: 3;
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
     font-weight: 700;
-    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.home-project-deck-controls button:hover { border-color: var(--text); box-shadow: var(--shadow); transform: translateY(-1px); }
 
 @keyframes home-project-card-in {
     from { opacity: 0; transform: translateY(8px) scale(0.995); }

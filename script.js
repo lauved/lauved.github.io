@@ -208,14 +208,14 @@
 
         stage.innerHTML = projects.map(renderProject).join("");
         const homeProjectCards = stage.querySelectorAll(".home-project-card");
-        const deckControls = document.createElement("div");
-        deckControls.className = "home-project-deck-controls";
-        deckControls.innerHTML = `
-            <button type="button" data-project-deck="previous" aria-label="Show previous project">← Previous</button>
-            <p aria-live="polite"></p>
-            <button type="button" data-project-deck="next" aria-label="Show next project">Next →</button>`;
-        stage.after(deckControls);
-        const deckStatus = deckControls.querySelector("p");
+        const scrollTrack = document.createElement("div");
+        scrollTrack.className = "home-project-scroll-track";
+        stage.before(scrollTrack);
+        scrollTrack.appendChild(stage);
+        const deckStatus = document.createElement("p");
+        deckStatus.className = "home-project-deck-status";
+        deckStatus.setAttribute("aria-live", "polite");
+        stage.appendChild(deckStatus);
         let matchingCards = [];
         let activeCardIndex = 0;
 
@@ -229,8 +229,20 @@
             });
             const title = matchingCards[activeCardIndex].querySelector("h3")?.textContent || "Project";
             deckStatus.textContent = `${activeCardIndex + 1} of ${matchingCards.length} · ${title}`;
-            deckControls.hidden = matchingCards.length < 2;
             stage.classList.toggle("has-multiple-projects", matchingCards.length > 1);
+        };
+
+        const updateCardFromScroll = () => {
+            if (matchingCards.length < 2) return;
+            const rect = scrollTrack.getBoundingClientRect();
+            const distance = Math.max(1, scrollTrack.offsetHeight - window.innerHeight);
+            const progress = Math.min(1, Math.max(0, -rect.top / distance));
+            const index = Math.min(matchingCards.length - 1, Math.floor(progress * matchingCards.length));
+            if (index !== activeCardIndex) {
+                const direction = index > activeCardIndex ? "next" : "previous";
+                showActiveCard(index);
+                trackEvent("Project Deck Navigated", { direction });
+            }
         };
 
         const setHomeFilter = (filter, options = {}) => {
@@ -245,6 +257,7 @@
                 return filter === "all" || categories.includes(filter);
             });
             activeCardIndex = 0;
+            scrollTrack.style.minHeight = `${100 + Math.max(0, matchingCards.length - 1) * 32}vh`;
             showActiveCard(activeCardIndex);
 
             if (options.updateUrl) updateCategoryUrl(filter);
@@ -257,17 +270,7 @@
             });
         });
 
-        deckControls.addEventListener("click", event => {
-            const button = event.target.closest("[data-project-deck]");
-            if (!button) return;
-            const direction = button.dataset.projectDeck === "next" ? 1 : -1;
-            showActiveCard(activeCardIndex + direction);
-            trackEvent("Project Deck Navigated", { direction: direction > 0 ? "next" : "previous" });
-        });
-        stage.addEventListener("keydown", event => {
-            if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-            showActiveCard(activeCardIndex + (event.key === "ArrowRight" ? 1 : -1));
-        });
+        window.addEventListener("scroll", updateCardFromScroll, { passive: true });
 
         setHomeFilter(getCategoryFromUrl());
         window.addEventListener("popstate", () => setHomeFilter(getCategoryFromUrl()));
