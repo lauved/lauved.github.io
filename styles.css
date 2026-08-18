@@ -940,8 +940,11 @@ body {
 }
 
 .home-project-stage {
-    display: block;
+    display: grid;
+    gap: 24px;
 }
+
+.home-project-card[hidden] { display: none; }
 
 .home-project-card {
     display: grid;

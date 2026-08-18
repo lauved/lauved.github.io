@@ -6,7 +6,7 @@
     const additionalProjectLinks = document.querySelectorAll(".additional-projects__links [data-categories]");
     const additionalProjectsEmpty = document.querySelector(".additional-projects__empty");
     const homeFilterButtons = document.querySelectorAll(".home-filter-chip");
-    const homeProjectCards = document.querySelectorAll(".home-project-card");
+    const projects = Array.isArray(window.portfolioProjects) ? window.portfolioProjects : [];
     const contactForms = document.querySelectorAll(".contact-form");
     const interactiveDotGrid = document.getElementById("interactiveDotGrid");
     const navSectionLinks = document.querySelectorAll('.nav__links a[href^="#"]');
@@ -19,6 +19,22 @@
     const runnerMessageTarget = document.querySelector("[data-runner-message]");
     const runnerActionButton = document.querySelector("[data-runner-action]");
     const runnerJumpButton = document.querySelector("[data-runner-jump]");
+
+    const trackEvent = (name, properties = {}) => {
+        if (typeof window.va === "function") window.va("event", { name, data: properties });
+    };
+
+    const getCategoryFromUrl = () => {
+        const category = new URL(window.location.href).searchParams.get("category") || "all";
+        return ["all", "mobile", "web", "games", "ai"].includes(category) ? category : "all";
+    };
+
+    const updateCategoryUrl = (category, mode = "push") => {
+        const url = new URL(window.location.href);
+        if (category === "all") url.searchParams.delete("category");
+        else url.searchParams.set("category", category);
+        window.history[mode === "replace" ? "replaceState" : "pushState"]({ category }, "", url);
+    };
 
     document.querySelectorAll('a[href="works.html"]').forEach((link) => {
         if (link.textContent.trim() === "Works") link.textContent = "Projects";
@@ -114,7 +130,20 @@
             }
         };
 
-        const setFilter = (filter) => {
+        projectCards.forEach((card) => {
+            const href = card.querySelector(".project-link")?.getAttribute("href");
+            const project = projects.find(item => item.url === href);
+            if (project) {
+                card.dataset.projectId = project.id;
+                card.dataset.categories = project.categories.join(" ");
+            }
+        });
+        additionalProjectLinks.forEach((link) => {
+            const project = projects.find(item => item.url === link.getAttribute("href"));
+            if (project) link.dataset.categories = project.categories.join(" ");
+        });
+
+        const setFilter = (filter, options = {}) => {
             filterButtons.forEach((button) => {
                 const isActive = button.dataset.filter === filter;
                 button.classList.toggle("is-active", isActive);
@@ -138,23 +167,49 @@
             } else {
                 filterAdditionalProjects(filter);
             }
+
+            if (options.updateUrl) updateCategoryUrl(filter);
+            if (options.track) trackEvent("Project Category Selected", { category: filter, location: "projects" });
         };
 
         filterButtons.forEach((button) => {
             button.addEventListener("click", () => {
-                setFilter(button.dataset.filter || "all");
+                setFilter(button.dataset.filter || "all", { updateUrl: true, track: true });
             });
         });
 
-        setFilter("all");
+        setFilter(getCategoryFromUrl());
+        window.addEventListener("popstate", () => setFilter(getCategoryFromUrl()));
     };
 
     const initHomeProjectPreview = () => {
-        if (!homeFilterButtons.length || !homeProjectCards.length) {
+        const stage = document.querySelector(".home-project-stage");
+        if (!homeFilterButtons.length || !stage || !projects.length) {
             return;
         }
 
-        const setHomeFilter = (filter) => {
+        const renderProject = (project) => `
+            <article class="home-project-card home-project-card--${project.categories.includes("games") ? "games" : project.categories.includes("ai") ? "ai" : project.categories[0]}" data-project-id="${project.id}" data-categories="${project.categories.join(" ")}">
+                <div class="home-project-card__media">
+                    <span class="home-project-card__category">${project.categoryLabel}</span>
+                    ${project.image
+                        ? `<div class="home-project-card__art home-project-photo"><img src="${project.image}" alt="${project.imageAlt}" loading="lazy" decoding="async" /></div>`
+                        : '<div class="home-project-card__art gradient-art gradient-art--lunas" aria-hidden="true"></div>'}
+                </div>
+                <div class="home-project-card__content">
+                    ${project.client ? `<p class="home-project-card__client">${project.client}</p>` : ""}
+                    <h3>${project.title}</h3>
+                    <p class="home-project-card__role"><strong>Role:</strong> ${project.role}</p>
+                    <p class="home-project-card__description">${project.summary}</p>
+                    <div class="home-project-card__tags">${project.tags.map(tag => `<span>${tag}</span>`).join("")}</div>
+                    <div class="project-card__actions"><a href="${project.url}" class="project-link">View Case Study</a></div>
+                </div>
+            </article>`;
+
+        stage.innerHTML = projects.map(renderProject).join("");
+        const homeProjectCards = stage.querySelectorAll(".home-project-card");
+
+        const setHomeFilter = (filter, options = {}) => {
             homeFilterButtons.forEach((button) => {
                 const isActive = button.dataset.homeFilter === filter;
                 button.classList.toggle("is-active", isActive);
@@ -162,17 +217,22 @@
             });
 
             homeProjectCards.forEach((card) => {
-                card.hidden = card.dataset.homePreview !== filter;
+                const categories = (card.dataset.categories || "").split(" ");
+                card.hidden = filter !== "all" && !categories.includes(filter);
             });
+
+            if (options.updateUrl) updateCategoryUrl(filter);
+            if (options.track) trackEvent("Project Category Selected", { category: filter, location: "home" });
         };
 
         homeFilterButtons.forEach((button) => {
             button.addEventListener("click", () => {
-                setHomeFilter(button.dataset.homeFilter || "all");
+                setHomeFilter(button.dataset.homeFilter || "all", { updateUrl: true, track: true });
             });
         });
 
-        setHomeFilter("all");
+        setHomeFilter(getCategoryFromUrl());
+        window.addEventListener("popstate", () => setHomeFilter(getCategoryFromUrl()));
     };
 
     const initContactForms = () => {
@@ -188,6 +248,7 @@
         };
 
         contactForms.forEach((form) => {
+            const draftKey = "portfolioContactDraft";
             const fields = Object.keys(validationRules).reduce((items, name) => {
                 const input = form.elements.namedItem(name);
                 if (input) items[name] = input;
@@ -197,6 +258,21 @@
             const status = form.querySelector(".contact-form__status");
             let submitting = false;
             let submissionId = "";
+
+            const saveDraft = () => {
+                const draft = {};
+                Object.keys(fields).forEach(name => { draft[name] = fields[name].value; });
+                try { sessionStorage.setItem(draftKey, JSON.stringify(draft)); } catch (_) {}
+            };
+
+            try {
+                const draft = JSON.parse(sessionStorage.getItem(draftKey) || "null");
+                if (draft && typeof draft === "object") {
+                    Object.keys(fields).forEach(name => {
+                        if (typeof draft[name] === "string") fields[name].value = draft[name];
+                    });
+                }
+            } catch (_) {}
 
             const showFieldError = (name, message) => {
                 const input = fields[name];
@@ -225,6 +301,7 @@
             Object.keys(fields).forEach((name) => {
                 fields[name].addEventListener("blur", () => validateField(name));
                 fields[name].addEventListener("input", () => {
+                    saveDraft();
                     if (fields[name].getAttribute("aria-invalid") === "true") validateField(name);
                 });
             });
@@ -259,9 +336,11 @@
 
                     form.reset();
                     Object.keys(fields).forEach(name => showFieldError(name, ""));
+                    try { sessionStorage.removeItem(draftKey); } catch (_) {}
                     submissionId = "";
                     status.textContent = "Message sent successfully. I'll get back to you soon.";
                     status.classList.add("is-success");
+                    trackEvent("Contact Form Sent");
                 } catch (_) {
                     status.textContent = "Something went wrong. Please try again.";
                     status.classList.add("is-error");
@@ -271,6 +350,148 @@
                     submitButton.textContent = "Send Message";
                 }
             });
+        });
+    };
+
+    const initCaseStudyNavigation = () => {
+        const casePage = document.querySelector(".case-page");
+        if (!casePage || !projects.length) return;
+
+        const filename = window.location.pathname.split("/").pop() || "";
+        const currentIndex = projects.findIndex(project => project.url === filename);
+        if (currentIndex < 0) return;
+
+        const current = projects[currentIndex];
+        const previous = projects[(currentIndex - 1 + projects.length) % projects.length];
+        const next = projects[(currentIndex + 1) % projects.length];
+        const related = projects
+            .filter(project => project.id !== current.id && project.categories.some(category => current.categories.includes(category)))
+            .sort((a, b) => {
+                const matches = project => project.categories.filter(category => current.categories.includes(category)).length;
+                return matches(b) - matches(a);
+            })
+            .slice(0, 3);
+
+        const navigation = document.createElement("nav");
+        navigation.className = "case-project-navigation";
+        navigation.setAttribute("aria-label", "Other projects");
+        navigation.innerHTML = `
+            <a href="${previous.url}" data-project-navigation="previous"><span>← Previous project</span><strong>${previous.title}</strong></a>
+            <a href="${next.url}" data-project-navigation="next"><span>Next project →</span><strong>${next.title}</strong></a>`;
+
+        const relatedSection = document.createElement("section");
+        relatedSection.className = "case-related";
+        relatedSection.setAttribute("aria-labelledby", "related-projects-title");
+        relatedSection.innerHTML = `
+            <div><p class="section-label">Keep Exploring</p><h2 id="related-projects-title">Related projects</h2></div>
+            <div class="case-related__links">${related.map(project => `
+                <a href="${project.url}"><strong>${project.title}</strong><span>${project.categoryLabel}</span></a>`).join("")}</div>`;
+
+        casePage.append(navigation, relatedSection);
+        navigation.addEventListener("click", event => {
+            const link = event.target.closest("a");
+            if (link) trackEvent("Project Navigation", { direction: link.dataset.projectNavigation, project: current.id });
+        });
+    };
+
+    const initCaseGallery = () => {
+        const images = Array.from(document.querySelectorAll(".case-gallery img"));
+        if (!images.length) return;
+
+        const dialog = document.createElement("div");
+        dialog.className = "case-lightbox";
+        dialog.hidden = true;
+        dialog.setAttribute("role", "dialog");
+        dialog.setAttribute("aria-modal", "true");
+        dialog.setAttribute("aria-label", "Project image viewer");
+        dialog.innerHTML = `
+            <button class="case-lightbox__close" type="button" aria-label="Close image viewer">×</button>
+            <button class="case-lightbox__previous" type="button" aria-label="Previous image">←</button>
+            <figure><img alt="" /><figcaption></figcaption></figure>
+            <button class="case-lightbox__next" type="button" aria-label="Next image">→</button>
+            <p class="case-lightbox__count" aria-live="polite"></p>`;
+        document.body.appendChild(dialog);
+
+        const displayedImage = dialog.querySelector("figure img");
+        const caption = dialog.querySelector("figcaption");
+        const count = dialog.querySelector(".case-lightbox__count");
+        const closeButton = dialog.querySelector(".case-lightbox__close");
+        let activeIndex = 0;
+        let previousFocus = null;
+        let touchStartX = 0;
+
+        const showImage = (index) => {
+            activeIndex = (index + images.length) % images.length;
+            const image = images[activeIndex];
+            displayedImage.src = image.currentSrc || image.src;
+            displayedImage.alt = image.alt;
+            caption.textContent = image.alt;
+            count.textContent = `${activeIndex + 1} of ${images.length}`;
+        };
+        const open = (index, trigger) => {
+            previousFocus = trigger;
+            showImage(index);
+            dialog.hidden = false;
+            document.body.classList.add("has-open-lightbox");
+            closeButton.focus();
+            trackEvent("Project Gallery Opened", { image: index + 1 });
+        };
+        const close = () => {
+            dialog.hidden = true;
+            document.body.classList.remove("has-open-lightbox");
+            previousFocus?.focus();
+        };
+
+        images.forEach((image, index) => {
+            const figure = image.closest("figure");
+            figure.tabIndex = 0;
+            figure.setAttribute("role", "button");
+            figure.setAttribute("aria-label", `Open image: ${image.alt}`);
+            figure.addEventListener("click", () => open(index, figure));
+            figure.addEventListener("keydown", event => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    open(index, figure);
+                }
+            });
+        });
+        closeButton.addEventListener("click", close);
+        dialog.querySelector(".case-lightbox__previous").addEventListener("click", () => showImage(activeIndex - 1));
+        dialog.querySelector(".case-lightbox__next").addEventListener("click", () => showImage(activeIndex + 1));
+        dialog.addEventListener("click", event => { if (event.target === dialog) close(); });
+        dialog.addEventListener("touchstart", event => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
+        dialog.addEventListener("touchend", event => {
+            const distance = event.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(distance) > 50) showImage(activeIndex + (distance < 0 ? 1 : -1));
+        }, { passive: true });
+        document.addEventListener("keydown", event => {
+            if (dialog.hidden) return;
+            if (event.key === "Escape") close();
+            if (event.key === "ArrowLeft") showImage(activeIndex - 1);
+            if (event.key === "ArrowRight") showImage(activeIndex + 1);
+            if (event.key === "Tab") {
+                const controls = Array.from(dialog.querySelectorAll("button"));
+                const index = controls.indexOf(document.activeElement);
+                if (event.shiftKey && index === 0) { event.preventDefault(); controls.at(-1).focus(); }
+                else if (!event.shiftKey && index === controls.length - 1) { event.preventDefault(); controls[0].focus(); }
+            }
+        });
+    };
+
+    const initAnalytics = () => {
+        if (!document.querySelector('script[src="/_vercel/insights/script.js"]')) {
+            window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+            const analytics = document.createElement("script");
+            analytics.defer = true;
+            analytics.src = "/_vercel/insights/script.js";
+            document.head.appendChild(analytics);
+        }
+
+        document.addEventListener("click", event => {
+            const link = event.target.closest("a");
+            if (!link) return;
+            if (link.matches('.project-link, .home-project-card a')) trackEvent("Project Opened", { href: link.getAttribute("href") || "" });
+            if (link.getAttribute("href")?.includes("resume.pdf")) trackEvent("Resume Opened");
         });
     };
 
@@ -1257,12 +1478,15 @@
         });
     };
 
+    initAnalytics();
     initAppearanceCustomizer();
     initNavScrollSpy();
     initTextRevealHeadings();
     initProjectFilters();
     initHomeProjectPreview();
     initContactForms();
+    initCaseStudyNavigation();
+    initCaseGallery();
     initInteractiveDotGrid();
     initFooterUtilities();
 
