@@ -37,7 +37,7 @@ PROJECT EXPERIENCE ON RESUME
 The resume specifically highlights LUNAS, BioTrack, and DermaScan as project experience. The portfolio does not list formal employment history, years of professional experience, certifications, awards, or completed company roles beyond the documented ClarifAI client project. Do not imply otherwise.
 
 CONTACT
-Portfolio contact email: tepa.lappay.up@phinmaed.com.
+Portfolio contact email: terrencelappay2118@gmail.com.
 Resume email: terrencelappay2118@gmail.com.
 Resume phone: 0968-653-9871.
 Location: Philippines, with the portfolio specifying Pangasinan, Philippines.

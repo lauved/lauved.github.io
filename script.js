@@ -180,32 +180,96 @@
             return;
         }
 
+        const validationRules = {
+            name: (value) => !value ? "Name is required." : value.length > 100 ? "Name must be 100 characters or fewer." : "",
+            email: (value) => !value ? "Email is required." : !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? "Enter a valid email address." : "",
+            subject: (value) => !value ? "Subject is required." : value.length > 150 ? "Subject must be 150 characters or fewer." : "",
+            message: (value) => !value ? "Message is required." : value.length < 10 ? "Message must be at least 10 characters." : value.length > 5000 ? "Message must be 5000 characters or fewer." : ""
+        };
+
         contactForms.forEach((form) => {
-            form.addEventListener("submit", (event) => {
+            const fields = Object.keys(validationRules).reduce((items, name) => {
+                const input = form.elements.namedItem(name);
+                if (input) items[name] = input;
+                return items;
+            }, {});
+            const submitButton = form.querySelector(".contact-submit");
+            const status = form.querySelector(".contact-form__status");
+            let submitting = false;
+            let submissionId = "";
+
+            const showFieldError = (name, message) => {
+                const input = fields[name];
+                if (!input) return;
+                const error = form.querySelector(`#${input.getAttribute("aria-describedby")}`);
+                input.setAttribute("aria-invalid", String(Boolean(message)));
+                if (error) error.textContent = message;
+            };
+
+            const validateField = (name) => {
+                const value = String(fields[name]?.value || "").trim();
+                const message = validationRules[name](value);
+                showFieldError(name, message);
+                return !message;
+            };
+
+            const validateForm = () => {
+                let firstInvalid;
+                Object.keys(fields).forEach((name) => {
+                    if (!validateField(name) && !firstInvalid) firstInvalid = fields[name];
+                });
+                firstInvalid?.focus();
+                return !firstInvalid;
+            };
+
+            Object.keys(fields).forEach((name) => {
+                fields[name].addEventListener("blur", () => validateField(name));
+                fields[name].addEventListener("input", () => {
+                    if (fields[name].getAttribute("aria-invalid") === "true") validateField(name);
+                });
+            });
+
+            form.addEventListener("submit", async (event) => {
                 event.preventDefault();
+                if (submitting || !validateForm()) return;
 
-                const formData = new FormData(form);
-                const name = String(formData.get("name") || "").trim();
-                const email = String(formData.get("email") || "").trim();
-                const message = String(formData.get("message") || "").trim();
-                const recipient = form.getAttribute("data-contact-email") || "";
+                submitting = true;
+                submitButton.disabled = true;
+                submitButton.textContent = "Sending...";
+                status.textContent = "";
+                status.className = "contact-form__status";
+                submissionId ||= crypto.randomUUID();
 
-                if (!recipient) {
-                    return;
+                const payload = Object.fromEntries(new FormData(form));
+                Object.keys(fields).forEach(name => { payload[name] = String(payload[name] || "").trim(); });
+                payload.submissionId = submissionId;
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json().catch(() => ({}));
+
+                    if (!response.ok) {
+                        if (result.fields) Object.entries(result.fields).forEach(([name, message]) => showFieldError(name, message));
+                        throw new Error("Contact request failed");
+                    }
+
+                    form.reset();
+                    Object.keys(fields).forEach(name => showFieldError(name, ""));
+                    submissionId = "";
+                    status.textContent = "Message sent successfully. I'll get back to you soon.";
+                    status.classList.add("is-success");
+                } catch (_) {
+                    status.textContent = "Something went wrong. Please try again.";
+                    status.classList.add("is-error");
+                } finally {
+                    submitting = false;
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Send Message";
                 }
-
-                const subject = encodeURIComponent(`Portfolio inquiry from ${name || "visitor"}`);
-                const body = encodeURIComponent(
-                    [
-                        `Name: ${name}`,
-                        `Email: ${email}`,
-                        "",
-                        "Message:",
-                        message,
-                    ].join("\n")
-                );
-
-                window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
             });
         });
     };

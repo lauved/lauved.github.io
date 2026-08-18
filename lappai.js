@@ -220,7 +220,7 @@
             return "Yes. Terrence is available for OJT opportunities, internships, junior roles, freelance work, and team collaborations.";
         }
         if (hasAny(question, ["contact", "email", "phone", "reach", "message", "linkedin", "github", "location", "where is", "taga saan"])) {
-            return "Terrence is based in Pangasinan, Philippines. You can email him at tepa.lappay.up@phinmaed.com, find him on LinkedIn, or view his work on GitHub. Use the Contact section for the quickest route.";
+            return "Terrence is based in Pangasinan, Philippines. You can email him at terrencelappay2118@gmail.com, find him on LinkedIn, or view his work on GitHub. Use the Contact section for the quickest route.";
         }
         if (hasAny(question, ["resume", "cv", "curriculum vitae"])) {
             return "You can open Terrence's resume using the Resume button in the navigation or the link below.";

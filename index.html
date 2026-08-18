@@ -331,7 +331,7 @@
                     <div class="contact-details-list">
                         <div>
                             <p class="section-label">Email</p>
-                            <a href="mailto:tepa.lappay.up@phinmaed.com">tepa.lappay.up@phinmaed.com</a>
+                            <a href="mailto:terrencelappay2118@gmail.com">terrencelappay2118@gmail.com</a>
                         </div>
                         <div>
                             <p class="section-label">Location</p>
@@ -344,23 +344,34 @@
                     </div>
                 </article>
 
-                <form class="contact-form-card contact-form" data-contact-email="tepa.lappay.up@phinmaed.com">
+                <form class="contact-form-card contact-form" action="/api/contact" method="post" novalidate>
                     <label class="form-field">
                         <span>Name</span>
-                        <input type="text" name="name" placeholder="Your name" required />
+                        <input type="text" name="name" placeholder="Your name" autocomplete="name" maxlength="100" required aria-describedby="contact-name-error" />
+                        <small class="form-field__error" id="contact-name-error"></small>
                     </label>
 
                     <label class="form-field">
                         <span>Email</span>
-                        <input type="email" name="email" placeholder="you@example.com" required />
+                        <input type="email" name="email" placeholder="you@example.com" autocomplete="email" maxlength="254" required aria-describedby="contact-email-error" />
+                        <small class="form-field__error" id="contact-email-error"></small>
+                    </label>
+
+                    <label class="form-field">
+                        <span>Subject</span>
+                        <input type="text" name="subject" placeholder="What would you like to discuss?" maxlength="150" required aria-describedby="contact-subject-error" />
+                        <small class="form-field__error" id="contact-subject-error"></small>
                     </label>
 
                     <label class="form-field">
                         <span>Message</span>
-                        <textarea name="message" rows="6" placeholder="Tell me about your project or role..." required></textarea>
+                        <textarea name="message" rows="6" placeholder="Tell me about your project or role..." minlength="10" maxlength="5000" required aria-describedby="contact-message-error"></textarea>
+                        <small class="form-field__error" id="contact-message-error"></small>
                     </label>
 
+                    <label class="contact-honeypot" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
                     <button class="contact-submit" type="submit">Send Message</button>
+                    <p class="contact-form__status" role="status" aria-live="polite"></p>
                 </form>
             </div>
         </section>
@@ -405,11 +416,11 @@
                     <p class="site-footer__label">Contact</p>
                     <div class="site-footer__contact">
                         <p>Pangasinan, Philippines</p>
-                        <a href="mailto:tepa.lappay.up@phinmaed.com">tepa.lappay.up@phinmaed.com</a>
+                        <a href="mailto:terrencelappay2118@gmail.com">terrencelappay2118@gmail.com</a>
                         <button
                             class="site-footer__copy"
                             type="button"
-                            data-copy-email="tepa.lappay.up@phinmaed.com"
+                            data-copy-email="terrencelappay2118@gmail.com"
                             aria-label="Copy email address"
                         >
                             Copy
