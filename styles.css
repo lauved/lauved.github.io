@@ -2160,6 +2160,36 @@ body {
     box-shadow: none;
 }
 
+:root[data-style="editorial"] .logo,
+:root[data-style="modern"] .logo {
+    color: var(--accent);
+}
+
+/* Give the full-width styles a deliberate frame instead of a lone divider. */
+:root[data-style="editorial"] .nav {
+    top: 10px;
+    margin-top: 10px;
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
+    border-radius: 2px;
+    background: rgba(252, 250, 245, 0.94);
+    box-shadow: none;
+}
+
+:root[data-style="modern"] .nav {
+    top: 10px;
+    margin-top: 10px;
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
+    background: rgba(252, 250, 245, 0.94);
+    box-shadow: none;
+}
+
+:root[data-theme="dark"][data-style="editorial"] .nav,
+:root[data-theme="dark"][data-style="modern"] .nav {
+    background: rgba(20, 26, 36, 0.9);
+}
+
 .nav__group {
     gap: 12px;
 }
@@ -2343,27 +2373,32 @@ body {
 ======================= */
 :root[data-style="art"] .nav {
     position: sticky;
-    top: 0;
-    width: min(920px, calc(100% - 48px));
-    min-height: 62px;
-    margin: 0 auto;
-    padding: 8px 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
+    top: 14px;
+    width: min(860px, calc(100% - 48px));
+    min-height: 64px;
+    margin: 14px auto 0;
+    padding: 9px 12px 9px 16px;
+    border: 1px solid rgba(var(--accent-rgb), 0.42);
+    border-radius: 999px;
+    outline: 1px solid var(--border);
+    outline-offset: 4px;
+    background:
+        radial-gradient(circle at 12% 0%, rgba(var(--accent-rgb), 0.13), transparent 34%),
+        var(--surface);
     box-shadow: none;
 }
 
 :root[data-style="art"] .nav::after {
-    content: "";
-    position: absolute;
-    right: 50%;
-    bottom: 0;
-    width: 100vw;
-    height: 1px;
-    background: var(--border);
-    transform: translateX(50%);
-    pointer-events: none;
+    content: none;
+}
+
+:root[data-style="art"] .logo {
+    min-width: 42px;
+    width: 42px;
+    padding: 0;
+    border: 1px solid rgba(var(--accent-rgb), 0.42);
+    border-radius: 50%;
+    background: var(--surface-strong);
 }
 
 :root[data-style="art"] .nav__group {
@@ -2476,7 +2511,7 @@ body {
 }
 
 :root[data-style="art"] .hero-portrait {
-    display: block;
+    display: none;
     flex: 0 0 auto;
     align-self: center;
     width: 260px;
