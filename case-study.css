@@ -78,6 +78,34 @@
 
 .case-hero__visual .gradient-art { width: 100%; }
 
+.case-hero__visual--assurance {
+    display: flex;
+    min-height: 360px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 18px;
+    padding: 44px;
+    color: #f7f1e8;
+    background:
+        radial-gradient(circle at 80% 18%, rgba(124, 169, 255, 0.38), transparent 32%),
+        linear-gradient(145deg, #242a35, #08090d);
+}
+
+.case-hero__visual--assurance span,
+.case-hero__visual--assurance small {
+    color: rgba(247, 241, 232, 0.62);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.case-hero__visual--assurance strong {
+    font-size: clamp(42px, 7vw, 78px);
+    line-height: 0.92;
+    letter-spacing: -0.07em;
+}
+
 .case-hero__visual > img {
     display: block;
     width: 100% !important;
@@ -265,6 +293,21 @@
 .case-gallery__screen img {
     object-fit: contain;
     object-position: center;
+}
+
+.case-gallery--lunas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+}
+
+.case-gallery--lunas figure {
+    background: #eef1fb;
+}
+
+.case-gallery--lunas img {
+    width: auto;
+    max-width: 100%;
+    max-height: 680px;
 }
 
 .case-gallery--three {

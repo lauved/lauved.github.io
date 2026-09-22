@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Information Assurance Case Study - Terrence Lappay</title>
+    <script>(() => { const saved = localStorage.getItem("portfolio-theme"); const preferred = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; document.documentElement.setAttribute("data-theme", saved || preferred); })();</script>
+    <script src="appearance-init.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="case-study.css" />
+</head>
+<body class="site-page">
+<canvas class="site-dot-grid" id="interactiveDotGrid" aria-hidden="true"></canvas>
+<div class="site-content">
+    <nav class="nav">
+        <a href="index.html" class="logo" aria-label="Go to the homepage">L</a>
+        <div class="nav__group"><ul class="nav__links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="works.html" aria-current="page">Projects</a></li><li><a href="index.html#home-contact">Contact</a></li></ul><div class="nav__actions"><a href="assets/resume.pdf" class="nav-resume" download="Terrence-Lappay-Resume.pdf">Resume</a><button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span class="theme-toggle__icon" aria-hidden="true">&#9789;</span><span class="theme-toggle__text">Dark</span></button></div></div>
+    </nav>
+    <main class="case-page">
+        <a class="case-back" href="works.html">&larr; Back to all projects</a>
+        <section class="case-hero">
+            <div class="case-hero__copy"><p class="section-label">Featured Client-Based Case Study</p><h1>Enhancing Information Assurance Practices</h1><p class="case-hero__lead">A client-based security and risk-management case study for Kyro Core I.T. Solutions, focused on improving data protection, operational resilience, and practical cybersecurity controls for a local IT service provider.</p><div class="case-tags"><span>Client-Based</span><span>Information Assurance</span><span>Cybersecurity</span><span>NIST RMF</span><span>Risk Management</span></div></div>
+            <div class="case-hero__visual case-hero__visual--assurance"><strong>Protect<br />what matters.</strong><small>Risk · Control · Continuity</small></div>
+        </section>
+        <div class="case-facts"><div class="case-fact"><span>Role</span><strong>Technical Researcher</strong></div><div class="case-fact"><span>Context</span><strong>Academic group project</strong></div><div class="case-fact"><span>Organization</span><strong>Kyro Core I.T. Solutions</strong></div><div class="case-fact"><span>Focus</span><strong>Security posture and continuity</strong></div></div>
+        <section class="case-section case-evidence"><h2>Project evidence</h2><p>The report translates an information-assurance assessment into practical, prioritized actions.</p><div class="case-evidence__grid"><div class="case-evidence__item"><span>Assessment framework</span><strong>NIST Risk Management Framework using likelihood, severity, and control priority</strong></div><div class="case-evidence__item"><span>Key risks</span><strong>Weak passwords, unauthorized CCTV access, SQL injection/XSS, data loss, phishing, and missing backups</strong></div><div class="case-evidence__item"><span>Research contribution</span><strong>Technical security solutions and tools applicable to the organization</strong></div></div></section>
+        <div class="case-grid">
+            <section class="case-section"><h2>Organization context</h2><p>Kyro Core I.T. Solutions is a small Dagupan City technology and security service provider offering CCTV sales and installation, web development and maintenance, SEO, and graphic design and printing services.</p></section>
+            <section class="case-section"><h2>Purpose</h2><p>The project identifies threats and vulnerabilities, recommends appropriate security controls, and establishes policies that strengthen cybersecurity, data protection, risk management, and business continuity.</p></section>
+            <section class="case-section case-section--wide"><h2>Identified risks</h2><div class="interface-grid"><article class="interface-preview"><h3>Access &amp; identity</h3><p>Weak or reused passwords, phishing, and poor authentication practices can enable unauthorized access.</p></article><article class="interface-preview"><h3>Systems &amp; privacy</h3><p>Unauthorized CCTV access and unpatched websites can expose sensitive footage, client data, or web systems.</p></article><article class="interface-preview"><h3>Continuity</h3><p>Data loss and the absence of a formal backup plan can interrupt operations and damage client trust.</p></article></div></section>
+            <section class="case-section"><h2>Security recommendations</h2><ul><li>Enforce strong passwords and multi-factor authentication.</li><li>Encrypt and regularly update CCTV infrastructure.</li><li>Perform vulnerability assessments and apply patches promptly.</li><li>Use onsite and cloud backups with a disaster-recovery plan.</li><li>Train employees to recognize phishing and practice cyber hygiene.</li></ul></section>
+            <section class="case-section"><h2>Policies &amp; governance</h2><ul><li>Acceptable Use Policy</li><li>Data Privacy Policy</li><li>Incident Response Policy</li><li>Access Control Policy based on least privilege</li><li>Formal management authorization and risk acceptance</li></ul></section>
+            <section class="case-section case-section--wide"><h2>Monitoring and continuity</h2><p>Information assurance is treated as an ongoing process. The report recommends monthly reviews, emerging-threat monitoring, effectiveness checks, post-incident reviews, log analysis, policy updates, and periodic risk reassessment so controls remain aligned with changing operations and threats.</p></section>
+            <section class="case-section"><h2>My contribution</h2><p>As Technical Researcher, I focused on technical security solutions and tools applicable to the organization and supported the group’s risk, control, and continuity recommendations.</p></section>
+            <section class="case-section"><h2>What I learned</h2><p>This project strengthened my ability to connect risk identification with actionable controls, communicate security priorities clearly, and think about protection as a balance of people, policy, technology, and recovery.</p></section>
+        </div>
+        <div class="case-cta"><div><h2>Interested in the security assessment?</h2><p>I can walk through the risk matrix, recommendations, and information-assurance decisions during an interview.</p></div><a href="index.html#home-contact" class="project-link">Contact Me</a></div>
+    </main>
+</div>
+<script src="data/projects.js"></script><script src="script.js"></script>
+</body>
+</html>

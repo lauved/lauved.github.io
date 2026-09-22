@@ -26,7 +26,7 @@
 
     const getCategoryFromUrl = () => {
         const category = new URL(window.location.href).searchParams.get("category") || "all";
-        return ["all", "mobile", "web", "games", "ai"].includes(category) ? category : "all";
+        return ["all", "mobile", "web", "games", "ai", "security"].includes(category) ? category : "all";
     };
 
     const updateCategoryUrl = (category, mode = "push") => {
@@ -194,6 +194,8 @@
                     <span class="home-project-card__category">${project.categoryLabel}</span>
                     ${project.image
                         ? `<div class="home-project-card__art home-project-photo"><img src="${project.image}" alt="${project.imageAlt}" loading="lazy" decoding="async" /></div>`
+                    : project.id === "information-assurance"
+                        ? '<div class="home-project-card__art home-security-art"><strong>Protect<br />what matters.</strong><span class="home-security-art__caption">Risk · Control · Continuity</span></div>'
                         : '<div class="home-project-card__art gradient-art gradient-art--lunas" aria-hidden="true"></div>'}
                 </div>
                 <div class="home-project-card__content">

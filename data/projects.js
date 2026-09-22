@@ -1,6 +1,18 @@
 (() => {
     const projects = [
         {
+            id: "information-assurance",
+            title: "Enhancing Information Assurance Practices",
+            url: "information-assurance.html",
+            categories: ["security"],
+            categoryLabel: "Client-Based / Information Assurance / Cybersecurity",
+            role: "TECHNICAL RESEARCHER",
+            summary: "An academic information-assurance case study for Kyro Core I.T. Solutions covering risk identification, NIST RMF assessment, security controls, policies, authorization, and continuous monitoring.",
+            tags: ["Client-Based", "Cybersecurity", "Risk Assessment", "NIST RMF", "Security Policies"],
+            image: null,
+            imageAlt: ""
+        },
+        {
             id: "clarifai",
             title: "ClarifAI",
             url: "clarifai.html",
@@ -8,10 +20,9 @@
             categoryLabel: "Web / AI",
             role: "FRONTEND DEVELOPER / UI/UX DESIGNER",
             summary: "An AI-powered data insights and decision-support platform that turns uploaded datasets into natural-language answers, visualizations, forecasts, and actionable recommendations.",
-            tags: ["Client-Based", "Web", "AI", "Analytics"],
+            tags: ["Web", "AI", "Analytics"],
             image: "assets/clarifaiweb.png",
             imageAlt: "ClarifAI analytics dashboard",
-            client: "Client project for Kyro Core I.T. Solutions"
         },
         {
             id: "sneakhub",
@@ -97,8 +108,8 @@
             role: "SYSTEM ANALYST / UI/UX DESIGNER",
             summary: "An AI-assisted urban infrastructure system connecting citizen reports, repair work, verification, and government monitoring.",
             tags: ["Mobile", "Web", "AI", "Civic Tech"],
-            image: null,
-            imageAlt: ""
+            image: "assets/lunas1.png",
+            imageAlt: "LUNAS AI hazard detection result"
         }
     ];
 
