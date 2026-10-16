@@ -48,6 +48,6 @@ Portfolio: https://lappayportfolio.vercel.app
 NAVIGATION
 Projects: /works.html or homepage section #home-works.
 Skills/About: homepage section #home-about.
-Resume: /assets/resume.pdf.
+Resume: /assets/CV_Lappay_Terrence.pdf.
 Contact: homepage section #home-contact.
 `;

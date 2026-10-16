@@ -554,7 +554,7 @@
             const link = event.target.closest("a");
             if (!link) return;
             if (link.matches('.project-link, .home-project-card a')) trackEvent("Project Opened", { href: link.getAttribute("href") || "" });
-            if (link.getAttribute("href")?.includes("resume.pdf")) trackEvent("Resume Opened");
+            if (link.getAttribute("href")?.includes("CV_Lappay_Terrence.pdf")) trackEvent("Resume Opened");
         });
     };
 
@@ -1541,6 +1541,12 @@
         });
     };
 
+    const initResumeDownloads = () => {
+        document.querySelectorAll('a[href*="CV_Lappay_Terrence.pdf"]').forEach((link) => {
+            link.setAttribute("download", "CV_Lappay_Terrence.pdf");
+        });
+    };
+
     initAnalytics();
     initAppearanceCustomizer();
     initNavScrollSpy();
@@ -1552,6 +1558,7 @@
     initCaseGallery();
     initInteractiveDotGrid();
     initFooterUtilities();
+    initResumeDownloads();
 
     const loadLappai = () => {
         if (document.querySelector('script[data-lappai]')) return;
