@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About - Terrence Lappay</title>
+    <title>Terrence Lappay | Mobile Application Developer</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#17181b" />
     <link rel="canonical" href="https://lappayportfolio.vercel.app/about.html" />
     <script>
         (() => {
             const savedTheme = localStorage.getItem("portfolio-theme");
-            const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-            document.documentElement.setAttribute("data-theme", savedTheme || preferredTheme);
+            const defaultTheme = "light";
+            document.documentElement.setAttribute("data-theme", savedTheme || defaultTheme);
         })();
     </script>
     <script src="appearance-init.js"></script>
